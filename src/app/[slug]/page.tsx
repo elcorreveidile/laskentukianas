@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 import { db } from "@/lib/db";
 import { makeChallenge } from "@/lib/spam";
 import { CommentForm } from "@/components/content/CommentForm";
@@ -74,7 +74,38 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     }),
   ]);
 
-  const clean = DOMPurify.sanitize(article.content);
+  const clean = sanitizeHtml(article.content, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+      "img",
+      "figure",
+      "figcaption",
+      "h1",
+      "h2",
+      "iframe",
+      "video",
+      "audio",
+      "source",
+      "span",
+    ]),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      img: ["src", "srcset", "alt", "title", "width", "height", "loading", "class"],
+      a: ["href", "name", "target", "rel", "class"],
+      iframe: ["src", "width", "height", "allow", "allowfullscreen", "frameborder", "title", "loading"],
+      video: ["src", "controls", "poster", "width", "height", "preload", "class"],
+      audio: ["src", "controls", "preload"],
+      source: ["src", "type", "srcset"],
+      "*": ["class", "id", "style"],
+    },
+    allowedIframeHostnames: [
+      "www.youtube.com",
+      "youtube.com",
+      "youtube-nocookie.com",
+      "www.youtube-nocookie.com",
+      "player.vimeo.com",
+      "open.spotify.com",
+    ],
+  });
   const challenge = makeChallenge();
 
   return (
