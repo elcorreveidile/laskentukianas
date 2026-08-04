@@ -1,0 +1,11 @@
+import sharp from "sharp";
+import pngToIco from "png-to-ico";
+import { readFile, writeFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+const dir = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "app");
+const svg = await readFile(join(dir, "icon.svg"));
+const pngs = await Promise.all([16, 32, 48].map((s) => sharp(svg).resize(s, s).png().toBuffer()));
+await writeFile(join(dir, "favicon.ico"), await pngToIco(pngs));
+await writeFile(join(dir, "apple-icon.png"), await sharp(svg).resize(180, 180).png().toBuffer());
+console.log("favicon.ico + apple-icon.png generados");

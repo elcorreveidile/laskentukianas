@@ -1,0 +1,200 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+// ---------- Auth.js (NextAuth) ----------
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String?
+  image         String?
+  role          Role      @default(USER)
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  articles      Article[] @relation("author")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------- Contenido editorial ----------
+
+model Article {
+  id              String                 @id @default(cuid())
+  title           String
+  slug            String                 @unique
+  excerpt         String?
+  content         String                 // HTML del editor
+  coverImage      String?
+  coverCredit     String?
+  coverPosition   String                 @default("center")
+  series          Series                 @default(CRONICAS)
+  order           Int                    @default(0)   // orden dentro de la serie
+  status          ContentStatus          @default(DRAFT)
+  featured        Boolean                @default(false)
+  authorId        String
+  publishedAt     DateTime?
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+  metaTitle       String?
+  metaDescription String?
+  byline          String?
+  wpId            Int?                   @unique   // idempotencia de importación
+  author          User                   @relation("author", fields: [authorId], references: [id])
+  authors         AuthorsOnArticles[]
+  categories      CategoriesOnArticles[]
+  media           Media[]
+  tags            TagsOnArticles[]
+  comments        Comment[]
+
+  @@index([series, order])
+  @@index([status, publishedAt])
+}
+
+model Author {
+  id        String              @id @default(cuid())
+  name      String
+  slug      String              @unique
+  bio       String?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  articles  AuthorsOnArticles[]
+}
+
+model AuthorsOnArticles {
+  articleId String
+  authorId  String
+  order     Int?
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  author    Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, authorId])
+}
+
+model Category {
+  id          String                 @id @default(cuid())
+  name        String                 @unique
+  slug        String                 @unique
+  description String?
+  parentId    String?
+  articles    CategoriesOnArticles[]
+  parent      Category?              @relation("CategoryTree", fields: [parentId], references: [id])
+  children    Category[]             @relation("CategoryTree")
+}
+
+model Tag {
+  id       String           @id @default(cuid())
+  name     String           @unique
+  slug     String           @unique
+  articles TagsOnArticles[]
+}
+
+model CategoriesOnArticles {
+  articleId  String
+  categoryId String
+  article    Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, categoryId])
+}
+
+model TagsOnArticles {
+  articleId String
+  tagId     String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+}
+
+model Media {
+  id         String   @id @default(cuid())
+  filename   String
+  url        String   // URL en Vercel Blob
+  originalUrl String? // URL original en WordPress (para reescritura)
+  mimeType   String
+  size       Int      @default(0)
+  alt        String?
+  caption    String?
+  wpId       Int?     @unique
+  articleId  String?
+  createdAt  DateTime @default(now())
+  article    Article? @relation(fields: [articleId], references: [id])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  wpId       Int?     @unique
+  articleId  String
+  authorName String
+  content    String
+  approved   Boolean  @default(true)
+  parentWpId Int?
+  createdAt  DateTime @default(now())
+  article    Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+}
+
+// ---------- Enums ----------
+
+enum Role {
+  USER
+  EDITOR
+  ADMIN
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum Series {
+  CRONICAS
+  KENTUKIANA
+  PAGINA
+}

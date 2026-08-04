@@ -1,0 +1,163 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import DOMPurify from "isomorphic-dompurify";
+import { db } from "@/lib/db";
+import { makeChallenge } from "@/lib/spam";
+import { CommentForm } from "@/components/content/CommentForm";
+
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const a = await db.article.findFirst({
+    where: { slug: params.slug, status: "PUBLISHED" },
+    select: { title: true, excerpt: true, coverImage: true, publishedAt: true, byline: true },
+  });
+  if (!a) return { title: "No encontrado" };
+  const description = a.excerpt || `${a.title} — Crónicas Kentukianas`;
+  return {
+    title: a.title,
+    description,
+    alternates: { canonical: `/${params.slug}` },
+    openGraph: {
+      type: "article",
+      title: a.title,
+      description,
+      url: `/${params.slug}`,
+      images: a.coverImage ? [{ url: a.coverImage }] : undefined,
+      publishedTime: a.publishedAt?.toISOString(),
+      authors: a.byline ? [a.byline] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: a.title,
+      description,
+      images: a.coverImage ? [a.coverImage] : undefined,
+    },
+  };
+}
+
+const SERIE_LABEL: Record<string, string> = {
+  CRONICAS: "Crónica",
+  KENTUKIANA: "Kentukiana",
+  PAGINA: "Página",
+};
+
+export default async function ArticlePage({ params }: { params: { slug: string } }) {
+  const article = await db.article.findFirst({
+    where: { slug: params.slug, status: "PUBLISHED" },
+    include: {
+      comments: {
+        where: { approved: true },
+        orderBy: { createdAt: "asc" },
+      },
+    },
+  });
+
+  if (!article) notFound();
+
+  // Anterior / siguiente dentro de la misma serie (por orden)
+  const [prev, next] = await Promise.all([
+    db.article.findFirst({
+      where: { series: article.series, status: "PUBLISHED", order: { lt: article.order } },
+      orderBy: { order: "desc" },
+      select: { slug: true, title: true },
+    }),
+    db.article.findFirst({
+      where: { series: article.series, status: "PUBLISHED", order: { gt: article.order } },
+      orderBy: { order: "asc" },
+      select: { slug: true, title: true },
+    }),
+  ]);
+
+  const clean = DOMPurify.sanitize(article.content);
+  const challenge = makeChallenge();
+
+  return (
+    <article className="mx-auto max-w-article px-6 py-12">
+      <p className="font-hand text-xl text-kentuki-dark">
+        {SERIE_LABEL[article.series] ?? ""}
+      </p>
+      <h1 className="mt-1 font-body text-3xl font-extrabold leading-tight text-tinta md:text-4xl">
+        {article.title}
+      </h1>
+      <p className="mt-3 text-sm text-tinta/60">
+        {article.byline ? `Por ${article.byline}` : null}
+        {article.publishedAt
+          ? ` · ${new Date(article.publishedAt).toLocaleDateString("es-ES", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}`
+          : null}
+      </p>
+
+      {article.coverImage && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={article.coverImage}
+          alt={article.title}
+          className="mt-6 w-full rounded-xl object-cover"
+        />
+      )}
+
+      <div
+        className="prose-editorial mt-8"
+        dangerouslySetInnerHTML={{ __html: clean }}
+      />
+
+      {/* Anterior / siguiente */}
+      <nav className="mt-12 flex justify-between gap-4 border-t border-black/10 pt-6 text-sm">
+        {prev ? (
+          <Link href={`/${prev.slug}`} className="max-w-[45%] text-kentuki-dark hover:underline">
+            ← {prev.title}
+          </Link>
+        ) : (
+          <span />
+        )}
+        {next ? (
+          <Link
+            href={`/${next.slug}`}
+            className="max-w-[45%] text-right text-kentuki-dark hover:underline"
+          >
+            {next.title} →
+          </Link>
+        ) : (
+          <span />
+        )}
+      </nav>
+
+      {/* Comentarios */}
+      <section className="mt-14">
+        <h2 className="font-display text-2xl uppercase text-tinta">
+          Comentarios{article.comments.length > 0 ? ` (${article.comments.length})` : ""}
+        </h2>
+        {article.comments.length > 0 ? (
+          <ul className="mt-6 space-y-5">
+            {article.comments.map((c) => (
+              <li key={c.id} className="rounded-lg border border-black/10 bg-white p-4">
+                <p className="font-bold text-tinta">{c.authorName}</p>
+                <p className="mt-1 whitespace-pre-line font-serif text-tinta/80">{c.content}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-4 font-serif text-tinta/60">
+            Todavía no hay comentarios. ¡Sé el primero!
+          </p>
+        )}
+
+        <CommentForm
+          articleId={article.id}
+          a={challenge.a}
+          b={challenge.b}
+          token={challenge.token}
+        />
+      </section>
+    </article>
+  );
+}

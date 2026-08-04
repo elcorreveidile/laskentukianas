@@ -1,0 +1,294 @@
+[
+  {
+    "id": 1,
+    "count": 16,
+    "description": "El cómo y los porqués de mi decisión de vivir la experiencia americana.",
+    "link": "https://lectoraium.com/category/cronicas/",
+    "name": "Crónicas",
+    "slug": "cronicas",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "aioseo_head": "\n\t\t<!-- All in One SEO 4.9.10 - aioseo.com -->\n\t<meta name=\"description\" content=\"El cómo y los porqués de mi decisión de vivir la experiencia americana.\" />\n\t<meta name=\"robots\" content=\"max-image-preview:large\" />\n\t<link rel=\"canonical\" href=\"https://lectoraium.com/category/cronicas/\" />\n\t<meta name=\"generator\" content=\"All in One SEO (AIOSEO) 4.9.10\" />\n\t\t<script type=\"application/ld+json\" class=\"aioseo-schema\">\n\t\t\t{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#breadcrumblist\",\"itemListElement\":[{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com#listItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https:\\/\\/lectoraium.com\",\"nextItem\":{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com\\/category\\/cronicas\\/#listItem\",\"name\":\"Cr\\u00f3nicas\"}},{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com\\/category\\/cronicas\\/#listItem\",\"position\":2,\"name\":\"Cr\\u00f3nicas\",\"previousItem\":{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com#listItem\",\"name\":\"Home\"}}]},{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#collectionpage\",\"url\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/\",\"name\":\"Cr\\u00f3nicas - Cr\\u00f3nicas Kentukianas\",\"description\":\"El c\\u00f3mo y los porqu\\u00e9s de mi decisi\\u00f3n de vivir la experiencia americana.\",\"inLanguage\":\"es-ES\",\"isPartOf\":{\"@id\":\"https:\\/\\/lectoraium.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#breadcrumblist\"}},{\"@type\":\"Person\",\"@id\":\"https:\\/\\/lectoraium.com\\/#person\",\"name\":\"Jorge Duro\",\"image\":{\"@type\":\"ImageObject\",\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#personImage\",\"url\":\"https:\\/\\/secure.gravatar.com\\/avatar\\/469c6497e5b8b15d0c51c4aa2cc84d47fffaa03a096f4e5e77a1a32f0bc5b7ea?s=96&d=mm&r=g\",\"width\":96,\"height\":96,\"caption\":\"Jorge Duro\"},\"sameAs\":[\"https:\\/\\/facebook.com\\/\",\"https:\\/\\/x.com\\/\",\"https:\\/\\/instagram.com\\/\",\"https:\\/\\/tiktok.com\\/@\",\"https:\\/\\/youtube.com\\/\",\"https:\\/\\/linkedin.com\\/in\\/\"]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/lectoraium.com\\/#website\",\"url\":\"https:\\/\\/lectoraium.com\\/\",\"name\":\"Cr\\u00f3nicas Kentukianas\",\"inLanguage\":\"es-ES\",\"publisher\":{\"@id\":\"https:\\/\\/lectoraium.com\\/#person\"}}]}\n\t\t</script>\n\t\t<!-- All in One SEO -->\n\n",
+    "aioseo_head_json": {
+      "title": "Crónicas - Crónicas Kentukianas",
+      "description": "El cómo y los porqués de mi decisión de vivir la experiencia americana.",
+      "canonical_url": "https://lectoraium.com/category/cronicas/",
+      "robots": "max-image-preview:large",
+      "keywords": "",
+      "webmasterTools": {
+        "miscellaneous": ""
+      },
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://lectoraium.com#listItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://lectoraium.com",
+                "nextItem": {
+                  "@type": "ListItem",
+                  "@id": "https://lectoraium.com/category/cronicas/#listItem",
+                  "name": "Crónicas"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://lectoraium.com/category/cronicas/#listItem",
+                "position": 2,
+                "name": "Crónicas",
+                "previousItem": {
+                  "@type": "ListItem",
+                  "@id": "https://lectoraium.com#listItem",
+                  "name": "Home"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "CollectionPage",
+            "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#collectionpage",
+            "url": "https://lectoraium.com/wp-json/wp/v2/categories/",
+            "name": "Crónicas - Crónicas Kentukianas",
+            "description": "El cómo y los porqués de mi decisión de vivir la experiencia americana.",
+            "inLanguage": "es-ES",
+            "isPartOf": {
+              "@id": "https://lectoraium.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#breadcrumblist"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://lectoraium.com/#person",
+            "name": "Jorge Duro",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#personImage",
+              "url": "https://secure.gravatar.com/avatar/469c6497e5b8b15d0c51c4aa2cc84d47fffaa03a096f4e5e77a1a32f0bc5b7ea?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Jorge Duro"
+            },
+            "sameAs": [
+              "https://facebook.com/",
+              "https://x.com/",
+              "https://instagram.com/",
+              "https://tiktok.com/@",
+              "https://youtube.com/",
+              "https://linkedin.com/in/"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://lectoraium.com/#website",
+            "url": "https://lectoraium.com/",
+            "name": "Crónicas Kentukianas",
+            "inLanguage": "es-ES",
+            "publisher": {
+              "@id": "https://lectoraium.com/#person"
+            }
+          }
+        ]
+      }
+    },
+    "aioseo_breadcrumb": "<div class=\"aioseo-breadcrumbs\"><span class=\"aioseo-breadcrumb\">\n\t\t\t<a href=\"https://lectoraium.com\" title=\"Home\">Home</a>\n\t\t</span><span class=\"aioseo-breadcrumb-separator\">&raquo;</span><span class=\"aioseo-breadcrumb\">\n\t\t\tCrónicas\n\t\t</span></div>",
+    "aioseo_breadcrumb_json": [
+      {
+        "label": "Home",
+        "link": "https://lectoraium.com"
+      },
+      {
+        "label": "Crónicas",
+        "link": "https://lectoraium.com/category/cronicas/"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/categories/1",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/posts?categories=1"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "count": 0,
+    "description": "Relato de la experiencia docente desde la llegada a EEUU.",
+    "link": "https://lectoraium.com/category/kentukianas/",
+    "name": "Kentukianas",
+    "slug": "kentukianas",
+    "taxonomy": "category",
+    "parent": 0,
+    "meta": [],
+    "aioseo_head": "\n\t\t<!-- All in One SEO 4.9.10 - aioseo.com -->\n\t<meta name=\"description\" content=\"Relato de la experiencia docente desde la llegada a EEUU.\" />\n\t<meta name=\"robots\" content=\"max-image-preview:large\" />\n\t<link rel=\"canonical\" href=\"https://lectoraium.com/category/kentukianas/\" />\n\t<meta name=\"generator\" content=\"All in One SEO (AIOSEO) 4.9.10\" />\n\t\t<script type=\"application/ld+json\" class=\"aioseo-schema\">\n\t\t\t{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#breadcrumblist\",\"itemListElement\":[{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com#listItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https:\\/\\/lectoraium.com\",\"nextItem\":{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com\\/category\\/kentukianas\\/#listItem\",\"name\":\"Kentukianas\"}},{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com\\/category\\/kentukianas\\/#listItem\",\"position\":2,\"name\":\"Kentukianas\",\"previousItem\":{\"@type\":\"ListItem\",\"@id\":\"https:\\/\\/lectoraium.com#listItem\",\"name\":\"Home\"}}]},{\"@type\":\"CollectionPage\",\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#collectionpage\",\"url\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/\",\"name\":\"Kentukianas - Cr\\u00f3nicas Kentukianas\",\"description\":\"Relato de la experiencia docente desde la llegada a EEUU.\",\"inLanguage\":\"es-ES\",\"isPartOf\":{\"@id\":\"https:\\/\\/lectoraium.com\\/#website\"},\"breadcrumb\":{\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#breadcrumblist\"}},{\"@type\":\"Person\",\"@id\":\"https:\\/\\/lectoraium.com\\/#person\",\"name\":\"Jorge Duro\",\"image\":{\"@type\":\"ImageObject\",\"@id\":\"https:\\/\\/lectoraium.com\\/wp-json\\/wp\\/v2\\/categories\\/#personImage\",\"url\":\"https:\\/\\/secure.gravatar.com\\/avatar\\/469c6497e5b8b15d0c51c4aa2cc84d47fffaa03a096f4e5e77a1a32f0bc5b7ea?s=96&d=mm&r=g\",\"width\":96,\"height\":96,\"caption\":\"Jorge Duro\"},\"sameAs\":[\"https:\\/\\/facebook.com\\/\",\"https:\\/\\/x.com\\/\",\"https:\\/\\/instagram.com\\/\",\"https:\\/\\/tiktok.com\\/@\",\"https:\\/\\/youtube.com\\/\",\"https:\\/\\/linkedin.com\\/in\\/\"]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/lectoraium.com\\/#website\",\"url\":\"https:\\/\\/lectoraium.com\\/\",\"name\":\"Cr\\u00f3nicas Kentukianas\",\"inLanguage\":\"es-ES\",\"publisher\":{\"@id\":\"https:\\/\\/lectoraium.com\\/#person\"}}]}\n\t\t</script>\n\t\t<!-- All in One SEO -->\n\n",
+    "aioseo_head_json": {
+      "title": "Kentukianas - Crónicas Kentukianas",
+      "description": "Relato de la experiencia docente desde la llegada a EEUU.",
+      "canonical_url": "https://lectoraium.com/category/kentukianas/",
+      "robots": "max-image-preview:large",
+      "keywords": "",
+      "webmasterTools": {
+        "miscellaneous": ""
+      },
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#breadcrumblist",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "@id": "https://lectoraium.com#listItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://lectoraium.com",
+                "nextItem": {
+                  "@type": "ListItem",
+                  "@id": "https://lectoraium.com/category/kentukianas/#listItem",
+                  "name": "Kentukianas"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "@id": "https://lectoraium.com/category/kentukianas/#listItem",
+                "position": 2,
+                "name": "Kentukianas",
+                "previousItem": {
+                  "@type": "ListItem",
+                  "@id": "https://lectoraium.com#listItem",
+                  "name": "Home"
+                }
+              }
+            ]
+          },
+          {
+            "@type": "CollectionPage",
+            "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#collectionpage",
+            "url": "https://lectoraium.com/wp-json/wp/v2/categories/",
+            "name": "Kentukianas - Crónicas Kentukianas",
+            "description": "Relato de la experiencia docente desde la llegada a EEUU.",
+            "inLanguage": "es-ES",
+            "isPartOf": {
+              "@id": "https://lectoraium.com/#website"
+            },
+            "breadcrumb": {
+              "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#breadcrumblist"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://lectoraium.com/#person",
+            "name": "Jorge Duro",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "https://lectoraium.com/wp-json/wp/v2/categories/#personImage",
+              "url": "https://secure.gravatar.com/avatar/469c6497e5b8b15d0c51c4aa2cc84d47fffaa03a096f4e5e77a1a32f0bc5b7ea?s=96&d=mm&r=g",
+              "width": 96,
+              "height": 96,
+              "caption": "Jorge Duro"
+            },
+            "sameAs": [
+              "https://facebook.com/",
+              "https://x.com/",
+              "https://instagram.com/",
+              "https://tiktok.com/@",
+              "https://youtube.com/",
+              "https://linkedin.com/in/"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://lectoraium.com/#website",
+            "url": "https://lectoraium.com/",
+            "name": "Crónicas Kentukianas",
+            "inLanguage": "es-ES",
+            "publisher": {
+              "@id": "https://lectoraium.com/#person"
+            }
+          }
+        ]
+      }
+    },
+    "aioseo_breadcrumb": "<div class=\"aioseo-breadcrumbs\"><span class=\"aioseo-breadcrumb\">\n\t\t\t<a href=\"https://lectoraium.com\" title=\"Home\">Home</a>\n\t\t</span><span class=\"aioseo-breadcrumb-separator\">&raquo;</span><span class=\"aioseo-breadcrumb\">\n\t\t\tKentukianas\n\t\t</span></div>",
+    "aioseo_breadcrumb_json": [
+      {
+        "label": "Home",
+        "link": "https://lectoraium.com"
+      },
+      {
+        "label": "Kentukianas",
+        "link": "https://lectoraium.com/category/kentukianas/"
+      }
+    ],
+    "_links": {
+      "self": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/categories/19",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/posts?categories=19"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]

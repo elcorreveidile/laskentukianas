@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "name": "admin",
+    "url": "https://lectoraium.com",
+    "description": "",
+    "link": "https://lectoraium.com/author/jorgeduro/",
+    "slug": "jorgeduro",
+    "avatar_urls": {
+      "24": "https://secure.gravatar.com/avatar/4c75fa91881de78b80f29b3abfe14627042c865e76831c02cffb4e032d7c8984?s=24&d=mm&r=g",
+      "48": "https://secure.gravatar.com/avatar/4c75fa91881de78b80f29b3abfe14627042c865e76831c02cffb4e032d7c8984?s=48&d=mm&r=g",
+      "96": "https://secure.gravatar.com/avatar/4c75fa91881de78b80f29b3abfe14627042c865e76831c02cffb4e032d7c8984?s=96&d=mm&r=g"
+    },
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/users/1",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/users"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "name": "Jorge Duro",
+    "url": "http://lectoraium.com",
+    "description": "",
+    "link": "https://lectoraium.com/author/jorge-duro/",
+    "slug": "jorge-duro",
+    "avatar_urls": {
+      "24": "https://secure.gravatar.com/avatar/469c6497e5b8b15d0c51c4aa2cc84d47fffaa03a096f4e5e77a1a32f0bc5b7ea?s=24&d=mm&r=g",
+      "48": "https://secure.gravatar.com/avatar/469c6497e5b8b15d0c51c4aa2cc84d47fffaa03a096f4e5e77a1a32f0bc5b7ea?s=48&d=mm&r=g",
+      "96": "https://secure.gravatar.com/avatar/469c6497e5b8b15d0c51c4aa2cc84d47fffaa03a096f4e5e77a1a32f0bc5b7ea?s=96&d=mm&r=g"
+    },
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/users/2",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://lectoraium.com/wp-json/wp/v2/users"
+        }
+      ]
+    }
+  }
+]
