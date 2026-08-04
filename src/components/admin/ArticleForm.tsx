@@ -50,7 +50,7 @@ export function ArticleForm({ initial }: { initial?: Initial }) {
         content,
         coverImage,
         series,
-        order,
+        order: Number(order),
         status,
         byline,
         tags,
@@ -91,7 +91,7 @@ export function ArticleForm({ initial }: { initial?: Initial }) {
       <div className="grid gap-4 md:grid-cols-3">
         <div>
           <label className="mb-1 block text-sm font-medium">Serie</label>
-          <select className={input} value={series} onChange={(e) => setSeries(e.target.value as Initial["series"])}>
+          <select className={input} value={series} onChange={(e) => setSeries(e.target.value as Initial["series"] || "CRONICAS")}>
             <option value="CRONICAS">Crónicas</option>
             <option value="KENTUKIANA">Kentukiana</option>
             <option value="PAGINA">Página</option>
@@ -103,7 +103,7 @@ export function ArticleForm({ initial }: { initial?: Initial }) {
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium">Estado</label>
-          <select className={input} value={status} onChange={(e) => setStatus(e.target.value as Initial["status"])}>
+          <select className={input} value={status} onChange={(e) => setStatus(e.target.value as Initial["status"] || "DRAFT")}>
             <option value="DRAFT">Borrador</option>
             <option value="REVIEW">En revisión</option>
             <option value="PUBLISHED">Publicado</option>

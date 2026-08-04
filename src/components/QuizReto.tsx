@@ -60,7 +60,7 @@ export default function QuizReto() {
   }
 
   function siguiente() {
-    if (i + 1 >= ronda.length) {
+    if (!ronda || i + 1 >= ronda.length) {
       setFin(true);
       return;
     }
