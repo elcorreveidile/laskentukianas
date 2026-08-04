@@ -5,6 +5,7 @@ import IntroOverlay from "@/components/IntroOverlay";
 import DrumEasterEgg from "@/components/DrumEasterEgg";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const display = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

@@ -18,6 +18,15 @@ export default function LoginPage({
       <div className="rounded-2xl border border-black/10 bg-white p-8 shadow-card">
         <LoginForm googleEnabled={googleEnabled} initialError={searchParams.error} />
       </div>
+      <div className="mt-5 flex justify-center gap-4 text-sm">
+        <Link href="/" className="text-tinta/60 hover:text-kentuki-dark">
+          ← Volver al sitio
+        </Link>
+        <span className="text-tinta/30">·</span>
+        <Link href="/admin" className="text-tinta/60 hover:text-kentuki-dark">
+          Ir al panel →
+        </Link>
+      </div>
     </div>
   );
 }
