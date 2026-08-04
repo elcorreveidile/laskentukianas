@@ -99,3 +99,24 @@ export async function sendCampaign(opts: {
   }
   return { campaignId, sent: opts.send };
 }
+
+/** Email transaccional puntual (1 destinatario) vía Brevo SMTP API. */
+export async function sendTransactionalEmail(opts: {
+  to: string;
+  toName?: string;
+  subject: string;
+  htmlContent: string;
+}): Promise<void> {
+  const senderEmail = process.env.BREVO_SENDER_EMAIL;
+  const senderName = process.env.BREVO_SENDER_NAME || "Crónicas Kentukianas";
+  if (!senderEmail) throw new Error("Falta BREVO_SENDER_EMAIL (remitente verificado en Brevo).");
+  await brevo(`/smtp/email`, {
+    method: "POST",
+    body: JSON.stringify({
+      sender: { name: senderName, email: senderEmail },
+      to: [{ email: opts.to, name: opts.toName || undefined }],
+      subject: opts.subject,
+      htmlContent: opts.htmlContent,
+    }),
+  });
+}
