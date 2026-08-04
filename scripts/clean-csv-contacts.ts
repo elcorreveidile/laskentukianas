@@ -92,10 +92,7 @@ async function main() {
   }
 
   // Generar CSV limpio (solo emails únicos)
-  const cleanLines = ["email"];
-  for (const email of uniqueEmails) {
-    cleanLines.push(email);
-  }
+  const cleanLines = ["email", ...Array.from(uniqueEmails)];
 
   await writeFile(OUTPUT_CSV, cleanLines.join("\n"), "utf-8");
   console.log(`\n✨ CSV limpio guardado en: ${OUTPUT_CSV}`);
