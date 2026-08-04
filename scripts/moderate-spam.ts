@@ -39,7 +39,7 @@ async function main() {
   const byName = (list: typeof comments) => {
     const m = new Map<string, number>();
     for (const c of list) m.set(c.authorName, (m.get(c.authorName) || 0) + 1);
-    return [...m.entries()].sort((a, b) => b[1] - a[1]);
+    return Array.from(m.entries()).sort((a, b) => b[1] - a[1]);
   };
 
   console.log(`Total: ${comments.length} · SPAM detectado: ${spam.length} · Legítimos: ${ham.length}\n`);
