@@ -2,6 +2,8 @@
 
 Blog editorial de *Crónicas Kentukianas*: «De Menorca a Kentucky, las crónicas de Jorge, un profe de español lanzado a la aventura (y a la batería)». Migrado desde WordPress a un stack propio en **Next.js 14 (App Router)** con base de datos PostgreSQL.
 
+El sitio es **bilingüe**: español (`es`, por defecto) e inglés americano (`en`) con [next-intl](https://next-intl.dev). Ver [Internacionalización (i18n)](#internacionalización-i18n).
+
 ## Stack
 
 - **Framework:** Next.js 14 (App Router, Server Actions, RSC) + TypeScript
@@ -11,6 +13,7 @@ Blog editorial de *Crónicas Kentukianas*: «De Menorca a Kentucky, las crónica
 - **Imágenes:** Vercel Blob
 - **Email:** Brevo (newsletter y correos transaccionales)
 - **Editor:** TipTap (rich text) con saneado de HTML vía `sanitize-html`
+- **i18n:** next-intl (enrutado por locale, `es`/`en`)
 - **Despliegue:** Vercel
 
 ## Funcionalidades
@@ -23,13 +26,35 @@ Blog editorial de *Crónicas Kentukianas*: «De Menorca a Kentucky, las crónica
 - **Secciones especiales:** mapa del viaje, quiz/reto, easter egg de batería, overlay de intro.
 - SEO integrado (`sitemap.ts`, `robots.ts`, Open Graph, metadatos).
 
+## Internacionalización (i18n)
+
+El sitio sirve la **interfaz** en dos idiomas con [next-intl](https://next-intl.dev):
+
+| Locale | Idioma | Rol |
+| --- | --- | --- |
+| `es` | Español | Por defecto (contenido original) |
+| `en` | Inglés (americano) | Traducción de la UI |
+
+- **Enrutado por prefijo**: las páginas públicas viven bajo `src/app/[locale]/…` (`/es/…`, `/en/…`). `src/middleware.ts` (next-intl) negocia el idioma y redirige `/` → `/es`. Las áreas `src/app/admin` y `src/app/api` quedan **sin** prefijo de idioma.
+- **Config**: `src/i18n/routing.ts` (locales y `defaultLocale`), `request.ts` (carga de mensajes) y `navigation.ts` (`Link`, `useRouter`, `usePathname` con locale). `next.config.mjs` envuelve la app con `createNextIntlPlugin`.
+- **Diccionarios de UI**: `src/messages/es.json` y `en.json` (mismas claves en ambos). Los componentes usan `useTranslations(namespace)` en vez de texto fijo.
+- **Selector de idioma**: `src/components/layout/LanguageSwitcher.tsx`, con banderas 🇪🇸/🇺🇸, que navega a la ruta equivalente en el otro idioma.
+
+> Alcance: se internacionaliza la **interfaz** (menús, botones, mensajes). La traducción del **contenido editorial** (artículos por idioma en la base de datos) queda pendiente.
+
 ## Estructura
 
 ```
 src/
-  app/            Rutas (App Router): páginas públicas, /admin, /api
+  app/
+    [locale]/     Páginas públicas por idioma (es/en): home, cronicas, mapa…
+    admin/        Panel de administración (sin prefijo de idioma)
+    api/          Rutas de API (sin prefijo de idioma)
   components/     UI: layout, admin, content, auth y componentes especiales
+  i18n/           Config de next-intl: routing, request, navigation
+  messages/       Diccionarios de UI por idioma: es.json / en.json
   lib/            Lógica: auth, db, brevo, spam, server actions
+  middleware.ts   Negociación de idioma (next-intl)
 prisma/           schema.prisma + seed
 scripts/          Importación desde WordPress, gestión de Brevo, utilidades
 wp-export/        Export original de WordPress
