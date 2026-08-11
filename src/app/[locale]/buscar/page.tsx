@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
@@ -13,7 +13,7 @@ export default async function BuscarPage({
 }: {
   searchParams: { q?: string };
 }) {
-  const t = useTranslations("buscar");
+  const t = await getTranslations("buscar");
   const q = (searchParams.q ?? "").trim();
   const resultados =
     q.length >= 2

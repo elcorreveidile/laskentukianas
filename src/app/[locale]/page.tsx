@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { ArticleCard } from "@/components/content/ArticleCard";
@@ -19,8 +19,8 @@ async function getCronicas() {
 }
 
 export default async function Home() {
-  const t = useTranslations("home");
-  const tSite = useTranslations("site");
+  const t = await getTranslations("home");
+  const tSite = await getTranslations("site");
   const cronicas = await getCronicas();
   const primera = cronicas[0];
 

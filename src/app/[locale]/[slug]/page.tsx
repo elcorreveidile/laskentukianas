@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import sanitizeHtml from "sanitize-html";
@@ -51,7 +50,7 @@ export default async function ArticlePage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const t = useTranslations("article");
+  const t = await getTranslations({ locale, namespace: "article" });
 
   const article = await db.article.findFirst({
     where: { slug, status: "PUBLISHED" },

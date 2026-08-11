@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { useTranslations } from "next-intl";
 import { db } from "@/lib/db";
 import { ArticleCard } from "@/components/content/ArticleCard";
 
@@ -16,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 export default async function CronicasPage() {
-  const t = useTranslations("cronicas");
+  const t = await getTranslations("cronicas");
   const articles = await db.article
     .findMany({
       where: { status: "PUBLISHED", series: "CRONICAS" },
