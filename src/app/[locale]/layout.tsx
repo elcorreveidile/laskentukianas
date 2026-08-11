@@ -9,6 +9,7 @@ import DrumEasterEgg from "@/components/DrumEasterEgg";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { LocaleAlternatesProvider } from "@/components/i18n/LocaleAlternates";
 
 const display = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
@@ -89,12 +90,14 @@ export default async function LocaleLayout({
     >
       <body className="flex min-h-screen flex-col font-body">
         <NextIntlClientProvider messages={messages}>
-          <IntroOverlay />
-          <DrumEasterEgg />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <ScrollToTop />
+          <LocaleAlternatesProvider>
+            <IntroOverlay />
+            <DrumEasterEgg />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <ScrollToTop />
+          </LocaleAlternatesProvider>
         </NextIntlClientProvider>
       </body>
     </html>

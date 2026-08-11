@@ -88,9 +88,32 @@ model Article {
   media           Media[]
   tags            TagsOnArticles[]
   comments        Comment[]
+  translations    ArticleTranslation[]
 
   @@index([series, order])
   @@index([status, publishedAt])
+}
+
+// Traducción del contenido de un artículo a otro idioma (p.ej. "en").
+// El Article es la fuente (español); cada traducción cuelga de él.
+model ArticleTranslation {
+  id              String   @id @default(cuid())
+  articleId       String
+  locale          String
+  title           String
+  slug            String
+  excerpt         String?
+  content         String   // HTML traducido (mismas etiquetas/imágenes que el original)
+  metaTitle       String?
+  metaDescription String?
+  sourceHash      String?  // hash del contenido fuente al traducir; detecta traducciones obsoletas
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  article         Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, locale])
+  @@unique([locale, slug])
+  @@index([locale])
 }
 
 model Author {

@@ -12,6 +12,8 @@
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
     "wp:import": "tsx scripts/wp-import.ts",
+    "export:articles": "tsx scripts/export-articles.ts",
+    "import:translations": "tsx scripts/import-translations.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {

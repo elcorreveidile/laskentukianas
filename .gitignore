@@ -38,6 +38,9 @@ next-env.d.ts
 # prisma
 prisma/migrations/dev/
 
+# pipeline de traducción (contenido volcado + traducciones en curso)
+i18n-work/
+
 # claude code (config personal, no compartida)
 .claude/settings.local.json
 

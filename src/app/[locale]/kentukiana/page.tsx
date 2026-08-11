@@ -1,6 +1,6 @@
-import { getTranslations } from "next-intl/server";
-import { db } from "@/lib/db";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ArticleCard } from "@/components/content/ArticleCard";
+import { listArticleCards, type AppLocale } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
 
@@ -10,19 +10,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: t("metaTitle"),
     description: t("metaDesc"),
-    alternates: { canonical: `/${locale}/kentukiana` },
+    alternates: {
+      canonical: `/${locale}/kentukiana`,
+      languages: { es: "/es/kentukiana", en: "/en/kentukiana" },
+    },
   };
 }
 
 export default async function KentukianaPage() {
   const t = await getTranslations("kentukiana");
-  const articles = await db.article
-    .findMany({
-      where: { status: "PUBLISHED", series: "KENTUKIANA" },
-      orderBy: { order: "asc" },
-      select: { slug: true, title: true, excerpt: true, coverImage: true },
-    })
-    .catch(() => []);
+  const locale = (await getLocale()) as AppLocale;
+  const articles = await listArticleCards(
+    { status: "PUBLISHED", series: "KENTUKIANA" },
+    { order: "asc" },
+    locale
+  );
 
   return (
     <div className="mx-auto max-w-content px-6 py-14">

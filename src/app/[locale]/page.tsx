@@ -1,27 +1,20 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { db } from "@/lib/db";
 import { ArticleCard } from "@/components/content/ArticleCard";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { listArticleCards, type AppLocale } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
-
-async function getCronicas() {
-  try {
-    return await db.article.findMany({
-      where: { status: "PUBLISHED", series: "CRONICAS" },
-      orderBy: [{ order: "asc" }, { publishedAt: "asc" }],
-      select: { slug: true, title: true, excerpt: true, coverImage: true, order: true },
-    });
-  } catch {
-    return [];
-  }
-}
 
 export default async function Home() {
   const t = await getTranslations("home");
   const tSite = await getTranslations("site");
-  const cronicas = await getCronicas();
+  const locale = (await getLocale()) as AppLocale;
+  const cronicas = await listArticleCards(
+    { status: "PUBLISHED", series: "CRONICAS" },
+    [{ order: "asc" }, { publishedAt: "asc" }],
+    locale
+  );
   const primera = cronicas[0];
 
   return (

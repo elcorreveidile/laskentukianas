@@ -3,6 +3,7 @@
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
+import { useLocaleAlternates } from "@/components/i18n/LocaleAlternates";
 import { useTransition } from "react";
 
 const LOCALE_FLAGS: Record<string, string> = { es: "🇪🇸", en: "🇺🇸" };
@@ -12,12 +13,16 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const alternates = useLocaleAlternates();
   const [isPending, startTransition] = useTransition();
 
   function switchLocale(next: string) {
     if (next === locale) return;
+    // En páginas de artículo los slugs difieren entre idiomas: si hay una ruta
+    // equivalente registrada, navega a ella; si no, cambia solo el prefijo.
+    const target = alternates[next];
     startTransition(() => {
-      router.replace(pathname, { locale: next });
+      router.replace(target ?? pathname, { locale: next });
     });
   }
 

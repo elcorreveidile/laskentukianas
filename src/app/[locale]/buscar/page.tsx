@@ -1,6 +1,6 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { db } from "@/lib/db";
+import { searchArticles, type AppLocale } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
 
@@ -14,23 +14,9 @@ export default async function BuscarPage({
   searchParams: { q?: string };
 }) {
   const t = await getTranslations("buscar");
+  const locale = (await getLocale()) as AppLocale;
   const q = (searchParams.q ?? "").trim();
-  const resultados =
-    q.length >= 2
-      ? await db.article
-          .findMany({
-            where: {
-              status: "PUBLISHED",
-              OR: [
-                { title: { contains: q, mode: "insensitive" } },
-                { content: { contains: q, mode: "insensitive" } },
-              ],
-            },
-            orderBy: { order: "asc" },
-            select: { slug: true, title: true },
-          })
-          .catch(() => [])
-      : [];
+  const resultados = q.length >= 2 ? await searchArticles(q, locale) : [];
 
   return (
     <div className="mx-auto max-w-content px-6 py-14">
