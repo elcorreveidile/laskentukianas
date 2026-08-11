@@ -1,10 +1,12 @@
 "use client";
 
 import { Suspense, useMemo, useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 
 function ResetForm() {
+  const t = useTranslations("resetPassword");
   const params = useSearchParams();
   const email = useMemo(() => params.get("email") || "", [params]);
   const token = useMemo(() => params.get("token") || "", [params]);
@@ -21,7 +23,7 @@ function ResetForm() {
     e.preventDefault();
     setError(null);
     if (password !== confirm) {
-      setError("Las contraseñas no coinciden");
+      setError(t("mismatch"));
       return;
     }
     setLoading(true);
@@ -33,14 +35,14 @@ function ResetForm() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error || "No se pudo restablecer la contraseña");
+        setError(data.error || t("error"));
         return;
       }
       setSuccess(true);
       setPassword("");
       setConfirm("");
     } catch {
-      setError("No se pudo restablecer la contraseña. Inténtalo de nuevo.");
+      setError(t("errorRetry"));
     } finally {
       setLoading(false);
     }
@@ -49,9 +51,9 @@ function ResetForm() {
   if (invalid) {
     return (
       <p className="font-serif text-tinta/70">
-        El enlace no es válido o está incompleto.{" "}
+        {t("invalid")}{" "}
         <Link href="/login" className="text-kentuki-dark underline">
-          Volver al acceso
+          {t("backToAccess")}
         </Link>
         .
       </p>
@@ -61,12 +63,12 @@ function ResetForm() {
   if (success) {
     return (
       <div role="status" className="rounded-lg border border-emerald-300 bg-emerald-50 p-4 text-center">
-        <p className="font-bold text-emerald-800">Contraseña actualizada ✅</p>
+        <p className="font-bold text-emerald-800">{t("success")}</p>
         <Link
           href="/login"
           className="mt-3 inline-block rounded-lg bg-kentuki px-5 py-2.5 font-semibold text-white hover:bg-kentuki-dark"
         >
-          Iniciar sesión
+          {t("login")}
         </Link>
       </div>
     );
@@ -74,9 +76,9 @@ function ResetForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <p className="text-sm text-tinta/60">Para {email}</p>
+      <p className="text-sm text-tinta/60">{t("for", { email })}</p>
       <div>
-        <label className="mb-1 block text-sm font-medium">Nueva contraseña</label>
+        <label className="mb-1 block text-sm font-medium">{t("newPassword")}</label>
         <input
           type="password"
           required
@@ -84,11 +86,11 @@ function ResetForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full rounded-lg border border-black/15 px-4 py-3"
-          placeholder="Mínimo 8 caracteres"
+          placeholder={t("placeholder")}
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium">Repite la contraseña</label>
+        <label className="mb-1 block text-sm font-medium">{t("repeatPassword")}</label>
         <input
           type="password"
           required
@@ -105,21 +107,23 @@ function ResetForm() {
         disabled={loading}
         className="w-full rounded-lg bg-kentuki px-4 py-3 font-display uppercase tracking-wide text-white transition hover:bg-kentuki-dark disabled:opacity-50"
       >
-        {loading ? "Guardando…" : "Guardar contraseña"}
+        {loading ? t("saving") : t("save")}
       </button>
     </form>
   );
 }
 
 export default function RestablecerContrasenaPage() {
+  const t = useTranslations("resetPassword");
+
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-6">
       <Link href="/" className="mb-6 text-center font-display text-2xl uppercase text-kentuki-dark">
         Crónicas Kentukianas
       </Link>
       <div className="rounded-2xl border border-black/10 bg-white p-8 shadow-card">
-        <h1 className="mb-6 font-body text-xl font-bold">Nueva contraseña</h1>
-        <Suspense fallback={<p className="text-tinta/60">Cargando…</p>}>
+        <h1 className="mb-6 font-body text-xl font-bold">{t("title")}</h1>
+        <Suspense fallback={<p className="text-tinta/60">{t("loading")}</p>}>
           <ResetForm />
         </Suspense>
       </div>

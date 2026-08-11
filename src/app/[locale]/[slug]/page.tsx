@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import sanitizeHtml from "sanitize-html";
 import { db } from "@/lib/db";
@@ -11,23 +13,25 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
+  const { locale, slug } = await params;
   const a = await db.article.findFirst({
-    where: { slug: params.slug, status: "PUBLISHED" },
+    where: { slug, status: "PUBLISHED" },
     select: { title: true, excerpt: true, coverImage: true, publishedAt: true, byline: true },
   });
-  if (!a) return { title: "No encontrado" };
+  if (!a) return { title: "Not found" };
+  const t = await getTranslations({ locale, namespace: "article" });
   const description = a.excerpt || `${a.title} — Crónicas Kentukianas`;
   return {
     title: a.title,
     description,
-    alternates: { canonical: `/${params.slug}` },
+    alternates: { canonical: `/${locale}/${slug}` },
     openGraph: {
       type: "article",
       title: a.title,
       description,
-      url: `/${params.slug}`,
+      url: `/${locale}/${slug}`,
       images: a.coverImage ? [{ url: a.coverImage }] : undefined,
       publishedTime: a.publishedAt?.toISOString(),
       authors: a.byline ? [a.byline] : undefined,
@@ -41,15 +45,16 @@ export async function generateMetadata({
   };
 }
 
-const SERIE_LABEL: Record<string, string> = {
-  CRONICAS: "Crónica",
-  KENTUKIANA: "Kentukiana",
-  PAGINA: "Página",
-};
+export default async function ArticlePage({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
+  const t = useTranslations("article");
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
   const article = await db.article.findFirst({
-    where: { slug: params.slug, status: "PUBLISHED" },
+    where: { slug, status: "PUBLISHED" },
     include: {
       comments: {
         where: { approved: true },
@@ -60,7 +65,6 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
   if (!article) notFound();
 
-  // Anterior / siguiente dentro de la misma serie (por orden)
   const [prev, next] = await Promise.all([
     db.article.findFirst({
       where: { series: article.series, status: "PUBLISHED", order: { lt: article.order } },
@@ -76,16 +80,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
   const clean = sanitizeHtml(article.content, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-      "img",
-      "figure",
-      "figcaption",
-      "h1",
-      "h2",
-      "iframe",
-      "video",
-      "audio",
-      "source",
-      "span",
+      "img", "figure", "figcaption", "h1", "h2", "iframe", "video", "audio", "source", "span",
     ]),
     allowedAttributes: {
       ...sanitizeHtml.defaults.allowedAttributes,
@@ -98,28 +93,26 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       "*": ["class", "id", "style"],
     },
     allowedIframeHostnames: [
-      "www.youtube.com",
-      "youtube.com",
-      "youtube-nocookie.com",
-      "www.youtube-nocookie.com",
-      "player.vimeo.com",
-      "open.spotify.com",
+      "www.youtube.com", "youtube.com", "youtube-nocookie.com",
+      "www.youtube-nocookie.com", "player.vimeo.com", "open.spotify.com",
     ],
   });
   const challenge = makeChallenge();
 
+  const localeStr = locale === "es" ? "es-ES" : "en-US";
+
   return (
     <article className="mx-auto max-w-article px-6 py-12">
       <p className="font-hand text-xl text-kentuki-dark">
-        {SERIE_LABEL[article.series] ?? ""}
+        {t(`series.${article.series}`)}
       </p>
       <h1 className="mt-1 font-body text-3xl font-extrabold leading-tight text-tinta md:text-4xl">
         {article.title}
       </h1>
       <p className="mt-3 text-sm text-tinta/60">
-        {article.byline ? `Por ${article.byline}` : null}
+        {article.byline ? t("by", { name: article.byline }) : null}
         {article.publishedAt
-          ? ` · ${new Date(article.publishedAt).toLocaleDateString("es-ES", {
+          ? ` · ${new Date(article.publishedAt).toLocaleDateString(localeStr, {
               day: "numeric",
               month: "long",
               year: "numeric",
@@ -128,7 +121,6 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       </p>
 
       {article.coverImage && (
-        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={article.coverImage}
           alt={article.title}
@@ -141,7 +133,6 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         dangerouslySetInnerHTML={{ __html: clean }}
       />
 
-      {/* Anterior / siguiente */}
       <nav className="mt-12 flex justify-between gap-4 border-t border-black/10 pt-6 text-sm">
         {prev ? (
           <Link href={`/${prev.slug}`} className="max-w-[45%] text-kentuki-dark hover:underline">
@@ -162,10 +153,11 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         )}
       </nav>
 
-      {/* Comentarios */}
       <section className="mt-14">
         <h2 className="font-display text-2xl uppercase text-tinta">
-          Comentarios{article.comments.length > 0 ? ` (${article.comments.length})` : ""}
+          {article.comments.length > 0
+            ? t("commentsCount", { count: article.comments.length })
+            : t("comments")}
         </h2>
         {article.comments.length > 0 ? (
           <ul className="mt-6 space-y-5">
@@ -178,7 +170,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
           </ul>
         ) : (
           <p className="mt-4 font-serif text-tinta/60">
-            Todavía no hay comentarios. ¡Sé el primero!
+            {t("noComments")}
           </p>
         )}
 

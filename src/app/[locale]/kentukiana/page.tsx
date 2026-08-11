@@ -1,14 +1,22 @@
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { db } from "@/lib/db";
 import { ArticleCard } from "@/components/content/ArticleCard";
 
 export const dynamic = "force-dynamic";
-export const metadata = {
-  title: "Kentukiana",
-  description: "Enseñar español en un aula «kentukiana»: la serie del profe.",
-  alternates: { canonical: "/kentukiana" },
-};
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "kentukiana" });
+  return {
+    title: t("metaTitle"),
+    description: t("metaDesc"),
+    alternates: { canonical: `/${locale}/kentukiana` },
+  };
+}
 
 export default async function KentukianaPage() {
+  const t = useTranslations("kentukiana");
   const articles = await db.article
     .findMany({
       where: { status: "PUBLISHED", series: "KENTUKIANA" },
@@ -19,9 +27,9 @@ export default async function KentukianaPage() {
 
   return (
     <div className="mx-auto max-w-content px-6 py-14">
-      <h1 className="mb-2 font-display text-4xl uppercase text-tinta">Kentukiana</h1>
+      <h1 className="mb-2 font-display text-4xl uppercase text-tinta">{t("title")}</h1>
       <p className="mb-10 font-serif text-lg text-tinta/70">
-        Enseñar español en un aula «kentukiana»: la serie del profe.
+        {t("description")}
       </p>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((a) => (

@@ -7,7 +7,7 @@
  *
  * Idempotente por wpId (re-ejecutable sin duplicar).
  */
-import "dotenv/config";
+import { config } from "dotenv";
 import { readFile } from "node:fs/promises";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -15,6 +15,9 @@ import { put } from "@vercel/blob";
 import { PrismaClient, Series, ContentStatus } from "@prisma/client";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Cargar .env.local explícitamente
+config({ path: join(__dirname, "..", ".env.local") });
 const EXPORT = join(__dirname, "..", "wp-export");
 const DATA = join(EXPORT, "data");
 const MEDIA = join(EXPORT, "media");

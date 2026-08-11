@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useState } from "react";
 
 function LogoBadge() {
@@ -17,46 +18,41 @@ function LogoBadge() {
   );
 }
 
-const NAV = [
-  { href: "/cronicas", label: "Crónicas" },
-  { href: "/kentukiana", label: "Kentukiana" },
-  { href: "/garito", label: "El Garito 🎸" },
-  { href: "/mapa", label: "Mapa" },
-  { href: "/reto", label: "Reto 🇪🇸" },
-  { href: "/newsletter", label: "No te pierdas nada" },
-  { href: "/buscar", label: "Buscar 🔎" },
-];
-
 export function Header() {
+  const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
+
+  const nav = [
+    { href: "/cronicas", label: t("cronicas") },
+    { href: "/kentukiana", label: t("kentukiana") },
+    { href: "/garito", label: t("garito") },
+    { href: "/mapa", label: t("mapa") },
+    { href: "/reto", label: t("reto") },
+    { href: "/newsletter", label: t("newsletter") },
+  ];
 
   return (
     <header className="sticky top-0 z-30 border-b border-black/10 bg-crema/90 backdrop-blur">
       <div className="mx-auto flex max-w-content items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <LogoBadge />
-          <span className="font-display text-lg uppercase tracking-wide text-kentuki-dark sm:text-2xl">
-            Crónicas Kentukianas
-          </span>
         </Link>
 
-        {/* Navegación de escritorio */}
         <nav className="hidden items-center gap-6 font-body text-sm md:flex">
-          {NAV.slice(0, -1).map((l) => (
+          {nav.map((l) => (
             <Link key={l.href} href={l.href} className="transition hover:text-kentuki">
               {l.label}
             </Link>
           ))}
-          <Link href="/buscar" aria-label="Buscar" className="transition hover:text-kentuki">
+          <Link href="/buscar" aria-label={t("buscarAria")} className="transition hover:text-kentuki">
             🔎
           </Link>
         </nav>
 
-        {/* Botón hamburguesa (móvil) */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          aria-label={open ? t("closeMenu") : t("openMenu")}
           aria-expanded={open}
           aria-controls="menu-movil"
           className="-mr-2 inline-flex items-center justify-center rounded-lg p-2 text-kentuki-dark transition hover:bg-black/5 md:hidden"
@@ -78,14 +74,13 @@ export function Header() {
         </button>
       </div>
 
-      {/* Menú desplegable (móvil) */}
       {open && (
         <nav
           id="menu-movil"
           className="border-t border-black/10 bg-crema px-4 pb-4 pt-2 font-body text-base md:hidden"
         >
           <div className="flex flex-col">
-            {NAV.map((l) => (
+            {nav.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -95,6 +90,13 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+            <Link
+              href="/buscar"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-3 text-tinta transition hover:bg-black/5 hover:text-kentuki"
+            >
+              {t("buscar")}
+            </Link>
           </div>
         </nav>
       )}

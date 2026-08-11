@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { PREGUNTAS, type Pregunta } from "@/lib/reto-preguntas";
 
-const RONDA = 10; // preguntas por partida
+const RONDA = 10;
 
 function barajar<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -14,7 +15,7 @@ function barajar<T>(arr: T[]): T[] {
   return a;
 }
 
-type Barajada = { p: Pregunta; orden: number[] }; // orden = permutación de opciones
+type Barajada = { p: Pregunta; orden: number[] };
 
 function nuevaRonda(): Barajada[] {
   return barajar(PREGUNTAS)
@@ -31,7 +32,7 @@ function veredicto(aciertos: number): { emoji: string; titulo: string; sub: stri
 }
 
 export default function QuizReto() {
-  // Se genera solo en el cliente para evitar desajustes de hidratación (usa Math.random).
+  const t = useTranslations("reto");
   const [ronda, setRonda] = useState<Barajada[] | null>(null);
   const [i, setI] = useState(0);
   const [elegida, setElegida] = useState<number | null>(null);
@@ -45,7 +46,7 @@ export default function QuizReto() {
   if (!ronda) {
     return (
       <div className="rounded-2xl border border-black/10 bg-white p-8 text-center shadow-card">
-        <p className="animate-pulse font-serif text-tinta/50">Barajando preguntas… 🥁</p>
+        <p className="animate-pulse font-serif text-tinta/50">{t("shuffling")}</p>
       </div>
     );
   }
@@ -90,7 +91,7 @@ export default function QuizReto() {
           onClick={reiniciar}
           className="mt-6 rounded-full bg-kentuki px-6 py-3 font-body font-semibold text-white transition hover:bg-kentuki-dark"
         >
-          Jugar otra vez 🔁
+          {t("playAgain")}
         </button>
       </div>
     );
@@ -98,13 +99,12 @@ export default function QuizReto() {
 
   return (
     <div className="rounded-2xl border border-black/10 bg-white p-6 shadow-card sm:p-8">
-      {/* progreso */}
       <div className="mb-5 flex items-center justify-between font-body text-sm text-tinta/60">
         <span className="rounded-full bg-kentuki/10 px-3 py-1 font-semibold text-kentuki-dark">
           {actual.p.cat}
         </span>
         <span>
-          Pregunta {i + 1} de {ronda.length} · Aciertos: {aciertos}
+          {t("progress", { current: i + 1, total: ronda.length, score: aciertos })}
         </span>
       </div>
       <div className="mb-6 h-1.5 w-full overflow-hidden rounded-full bg-black/5">
@@ -141,7 +141,6 @@ export default function QuizReto() {
         })}
       </div>
 
-      {/* feedback + siguiente */}
       {elegida !== null && (
         <div className="mt-5">
           {actual.p.explain && (
@@ -153,7 +152,7 @@ export default function QuizReto() {
             onClick={siguiente}
             className="mt-4 w-full rounded-full bg-kentuki px-6 py-3 font-body font-semibold text-white transition hover:bg-kentuki-dark sm:w-auto"
           >
-            {i + 1 >= ronda.length ? "Ver resultado 🏁" : "Siguiente →"}
+            {i + 1 >= ronda.length ? t("result") : t("next")}
           </button>
         </div>
       )}

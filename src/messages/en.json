@@ -1,0 +1,202 @@
+{
+  "site": {
+    "name": "Crónicas Kentukianas",
+    "tagline": "Jorge's blog 🥁",
+    "title": "Crónicas Kentukianas",
+    "description": "From Menorca to Kentucky: the chronicles of Jorge, a Spanish teacher who threw himself into the adventure (and the drums).",
+    "footer": "The chronicles of Jorge, from Menorca to Kentucky.",
+    "credit": "Development"
+  },
+  "nav": {
+    "cronicas": "Chronicles",
+    "kentukiana": "Kentukiana",
+    "garito": "El Garito 🎸",
+    "mapa": "Map",
+    "reto": "Challenge 🇪🇸",
+    "newsletter": "Don't miss a thing",
+    "buscar": "Search 🔎",
+    "buscarAria": "Search",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu"
+  },
+  "home": {
+    "hero": "From Menorca to Kentucky: the chronicle of a Spanish teacher who threw himself into the adventure (and the drums). Raise the curtain.",
+    "cta": "Start from the beginning →",
+    "sectionTitle": "The chronicles",
+    "sectionLink": "… and the Kentukianas from the classroom →",
+    "empty": "The chronicles are taking the stage… come back in a moment.",
+    "newsletterTitle": "Don't miss a thing",
+    "newsletterDesc": "Get every new chronicle in your inbox. No spam, just Jorge's adventures."
+  },
+  "cronicas": {
+    "title": "The chronicles",
+    "description": "The complete saga, from Menorca to Kentucky.",
+    "metaTitle": "Chronicles",
+    "metaDesc": "The complete saga of Jorge, from Menorca to Kentucky, chronicle by chronicle."
+  },
+  "kentukiana": {
+    "title": "Kentukiana",
+    "description": "Teaching Spanish in a «Kentucky» classroom: the teacher's series.",
+    "metaTitle": "Kentukiana",
+    "metaDesc": "Teaching Spanish in a «Kentucky» classroom: the teacher's series."
+  },
+  "garito": {
+    "title": "El Garito",
+    "metaTitle": "El Garito",
+    "metaDesc": "Jorge's music: live shows, drumsticks, and good rock.",
+    "subtitle": "Raise the curtain 🎸",
+    "description": "Jorge doesn't just write chronicles: he's also behind the drums in Holy Crackers. Raise the curtain — live shows, drumsticks, and good noise.",
+    "liveTitle": "Live",
+    "drumsticks": "Drumsticks",
+    "hint": "Psst… want to play? Type rock on any page. 🥁"
+  },
+  "mapa": {
+    "title": "The journey map",
+    "metaTitle": "The journey map",
+    "metaDesc": "From Menorca to Kentucky: follow Jorge's chronicle route on the map.",
+    "description": "From Menorca to Kentucky, stop by stop. Click each pin to jump to its chronicle."
+  },
+  "reto": {
+    "title": "Kentucky challenge",
+    "metaTitle": "Kentucky challenge",
+    "metaDesc": "Test your Spanish, your Kentucky knowledge, and your memory of the chronicles. 10 random questions per game.",
+    "subtitle": "How much do you know? 🇪🇸🥁",
+    "description": "Ten random questions about Spanish, Kentucky, music, and the chronicles themselves. Are you worthy of Jorge's drums?",
+    "shuffling": "Shuffling questions… 🥁",
+    "progress": "Question {current} of {total} · Score: {score}",
+    "next": "Next →",
+    "result": "See result 🏁",
+    "playAgain": "Play again 🔁"
+  },
+  "buscar": {
+    "title": "Search",
+    "placeholder": "What are you looking for?",
+    "button": "Search",
+    "results": "{count} result{plural} for «{query}»"
+  },
+  "newsletter": {
+    "metaTitle": "Don't miss a thing",
+    "metaDesc": "Subscribe and get every new chronicle from Jorge in your inbox.",
+    "title": "Don't miss a thing",
+    "description": "Sign up and get every new chronicle in your inbox. No spam, just Jorge's adventures from Menorca to Kentucky.",
+    "subscribe": "Sign me up",
+    "success": "Subscribed!",
+    "error": "Could not subscribe.",
+    "unsubscribe": "You can unsubscribe at any time."
+  },
+  "article": {
+    "series": {
+      "CRONICAS": "Chronicle",
+      "KENTUKIANA": "Kentukiana",
+      "PAGINA": "Page"
+    },
+    "by": "By {name}",
+    "comments": "Comments",
+    "commentsCount": "Comments ({count})",
+    "noComments": "No comments yet. Be the first!",
+    "readArticle": "Read article →",
+    "notFound": "Not found"
+  },
+  "comment": {
+    "title": "Leave a comment",
+    "description": "It will be published when Jorge reviews it.",
+    "namePlaceholder": "Your name",
+    "commentPlaceholder": "Your comment…",
+    "antiSpam": "Anti-spam: how much is {a} + {b}?",
+    "submit": "Send comment",
+    "submitting": "Sending…",
+    "success": "Sent.",
+    "error": "Could not send."
+  },
+  "login": {
+    "title": "Login",
+    "google": "Sign in with Google",
+    "entering": "Signing in…",
+    "enter": "Sign in",
+    "magicLink": "Sign in with magic link",
+    "magicLinkDesc": "We'll send you a login link to your email. No password needed.",
+    "forgotPassword": "Forgot your password?",
+    "back": "← Back",
+    "backToSite": "← Back to site",
+    "toPanel": "Go to panel →",
+    "magicLinkPage": {
+      "title": "Magic link",
+      "description": "Click the button to sign in to your Crónicas Kentukianas account.",
+      "expires": "The link expires in 1 hour and can only be used once.",
+      "invalid": "This link is invalid or incomplete. Request a new one from the login page.",
+      "backToAccess": "Back to login"
+    },
+    "magicForm": {
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "your@email.com",
+      "challenge": "How much is {a} + {b}?",
+      "sending": "Sending…",
+      "submit": "Send me a login link",
+      "sent": "Check your email 📬",
+      "sentDesc": "If the details are correct, we've sent you a link to sign in. It expires in 1 hour.",
+      "challengeError": "The operation is incorrect. Try the new one.",
+      "error": "Could not send the link.",
+      "errorRetry": "Could not send the link. Please try again."
+    },
+    "errors": {
+      "EmailSignin": "The magic link is invalid or has expired. Request a new one.",
+      "Verification": "The link is invalid or incomplete.",
+      "OAuthAccountNotLinked": "That email is already registered with another method."
+    },
+    "forgot": {
+      "title": "Reset password",
+      "sent": "If an account exists with that email, we've sent instructions to reset the password. It expires in 1 hour.",
+      "sending": "Sending…",
+      "submit": "Send recovery link"
+    }
+  },
+  "resetPassword": {
+    "title": "New password",
+    "invalid": "The link is invalid or incomplete.",
+    "backToAccess": "Back to login",
+    "for": "For {email}",
+    "newPassword": "New password",
+    "repeatPassword": "Repeat password",
+    "placeholder": "Minimum 8 characters",
+    "saving": "Saving…",
+    "save": "Save password",
+    "mismatch": "Passwords don't match",
+    "error": "Could not reset password",
+    "errorRetry": "Could not reset password. Please try again.",
+    "success": "Password updated ✅",
+    "login": "Sign in",
+    "loading": "Loading…"
+  },
+  "intro": {
+    "aria": "Welcome",
+    "kicker": "Live from the garage 🎸",
+    "sound": "🔊 With sound",
+    "mute": "🔇 Mute",
+    "enter": "Enter the garage →",
+    "skip": "skip intro"
+  },
+  "drum": {
+    "title": "🥁 Jorge's drums",
+    "close": "Close (Esc)",
+    "description": "Play with the mouse or keyboard. The kick drum is the space bar.",
+    "riff": "▶ Jorge's riff",
+    "space": "space",
+    "pads": {
+      "crash": "Crash",
+      "hihat": "Hi-hat",
+      "openhat": "Open hat",
+      "tom": "Tom",
+      "tom2": "Tom 2",
+      "snare": "Snare",
+      "kick": "Kick (space)"
+    }
+  },
+  "scrollToTop": {
+    "aria": "Back to top"
+  },
+  "language": {
+    "es": "Español",
+    "en": "English",
+    "switch": "Language"
+  }
+}

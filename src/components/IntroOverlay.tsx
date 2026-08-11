@@ -1,15 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
-/**
- * Intro de "escenario de bar/rock" en la primera visita: reproduce el vídeo con
- * ambiente de focos y da paso al sitio. En visitas posteriores no aparece.
- */
 const KEY = "kentukianas_intro_v1";
 type Phase = "idle" | "show" | "leaving" | "done";
 
 export default function IntroOverlay() {
+  const t = useTranslations("intro");
   const [phase, setPhase] = useState<Phase>("idle");
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -51,10 +49,10 @@ export default function IntroOverlay() {
     <div
       className={`intro ${phase === "leaving" ? "intro--leaving" : ""}`}
       role="dialog"
-      aria-label="Bienvenida"
+      aria-label={t("aria")}
     >
       <div className="intro__content">
-        <p className="intro__kicker">Directo desde el garito 🎸</p>
+        <p className="intro__kicker">{t("kicker")}</p>
         <h1 className="intro__title">
           Crónicas
           <br />
@@ -72,14 +70,14 @@ export default function IntroOverlay() {
             playsInline
           />
           <button className="intro__sound" onClick={toggleSound} type="button">
-            {muted ? "🔊 Con sonido" : "🔇 Silenciar"}
+            {muted ? t("sound") : t("mute")}
           </button>
         </div>
         <button className="intro__enter" onClick={enter} type="button">
-          Entrar al garito →
+          {t("enter")}
         </button>
         <button className="intro__skip" onClick={enter} type="button">
-          saltar intro
+          {t("skip")}
         </button>
       </div>
     </div>

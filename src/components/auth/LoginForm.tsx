@@ -1,17 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { MagicLinkForm } from "@/components/auth/MagicLinkForm";
 
 type Mode = "password" | "magic" | "forgot";
-
-const ERROR_MESSAGES: Record<string, string> = {
-  EmailSignin: "El enlace mágico no es válido o ha caducado. Pide uno nuevo.",
-  Verification: "El enlace no es válido o está incompleto.",
-  OAuthAccountNotLinked: "Ese email ya está registrado con otro método.",
-};
 
 export function LoginForm({
   googleEnabled,
@@ -20,14 +15,24 @@ export function LoginForm({
   googleEnabled: boolean;
   initialError?: string;
 }) {
+  const t = useTranslations("login");
+  const tForgot = useTranslations("login.forgot");
+  const tMagic = useTranslations("login.magicLinkPage");
+  const tMagicForm = useTranslations("login.magicForm");
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("password");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(initialError ? ERROR_MESSAGES[initialError] ?? "" : "");
 
-  // Estado del formulario "olvidé mi contraseña".
+  const errorMap: Record<string, string> = {
+    EmailSignin: t("errors.EmailSignin"),
+    Verification: t("errors.Verification"),
+    OAuthAccountNotLinked: t("errors.OAuthAccountNotLinked"),
+  };
+
+  const [error, setError] = useState(initialError ? errorMap[initialError] ?? "" : "");
+
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotSent, setForgotSent] = useState(false);
 
@@ -59,11 +64,11 @@ export function LoginForm({
   if (mode === "magic") {
     return (
       <div className="space-y-4">
-        <h1 className="font-body text-xl font-bold">Entrar con enlace mágico</h1>
-        <p className="text-sm text-tinta/60">Te enviamos un enlace de acceso al correo. Sin contraseña.</p>
+        <h1 className="font-body text-xl font-bold">{t("magicLink")}</h1>
+        <p className="text-sm text-tinta/60">{t("magicLinkDesc")}</p>
         <MagicLinkForm />
         <button onClick={() => setMode("password")} className="text-sm text-kentuki-dark hover:underline">
-          ← Volver
+          {t("back")}
         </button>
       </div>
     );
@@ -72,11 +77,10 @@ export function LoginForm({
   if (mode === "forgot") {
     return (
       <div className="space-y-4">
-        <h1 className="font-body text-xl font-bold">Recuperar contraseña</h1>
+        <h1 className="font-body text-xl font-bold">{tForgot("title")}</h1>
         {forgotSent ? (
           <p className="rounded-lg border border-kentuki/40 bg-kentuki/5 p-4 text-sm text-tinta/80">
-            Si existe una cuenta con ese correo, te hemos enviado instrucciones para restablecer la
-            contraseña. Caduca en 1 hora.
+            {tForgot("sent")}
           </p>
         ) : (
           <form onSubmit={onForgotSubmit} className="space-y-3">
@@ -93,21 +97,20 @@ export function LoginForm({
               disabled={loading}
               className="w-full rounded-lg bg-kentuki px-4 py-3 font-display uppercase tracking-wide text-white transition hover:bg-kentuki-dark disabled:opacity-50"
             >
-              {loading ? "Enviando…" : "Enviar enlace de recuperación"}
+              {loading ? tForgot("sending") : tForgot("submit")}
             </button>
           </form>
         )}
         <button onClick={() => setMode("password")} className="text-sm text-kentuki-dark hover:underline">
-          ← Volver
+          {t("back")}
         </button>
       </div>
     );
   }
 
-  // mode === "password"
   return (
     <div className="space-y-4">
-      <h1 className="font-body text-xl font-bold">Acceso</h1>
+      <h1 className="font-body text-xl font-bold">{t("title")}</h1>
       {error && <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{error}</p>}
 
       {googleEnabled && (
@@ -122,7 +125,7 @@ export function LoginForm({
               <path fill="#4CAF50" d="M24 45c5.2 0 10-2 13.6-5.2l-6.3-5.3C29.2 35.6 26.7 36.5 24 36.5c-5.3 0-9.7-3.4-11.3-8.1l-6.5 5C8.8 40.3 15.8 45 24 45z"/>
               <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.5l6.3 5.3C41.4 36 44 30.6 44 24c0-1.2-.1-2.3-.4-3.5z"/>
             </svg>
-            Entrar con Google
+            {t("google")}
           </button>
           <div className="flex items-center gap-3 text-xs text-tinta/40">
             <span className="h-px flex-1 bg-black/10" /> o <span className="h-px flex-1 bg-black/10" />
@@ -152,16 +155,16 @@ export function LoginForm({
           disabled={loading}
           className="w-full rounded-lg bg-kentuki px-4 py-3 font-display uppercase tracking-wide text-white transition hover:bg-kentuki-dark disabled:opacity-50"
         >
-          {loading ? "Entrando…" : "Entrar"}
+          {loading ? t("entering") : t("enter")}
         </button>
       </form>
 
       <div className="flex justify-between text-sm">
         <button onClick={() => setMode("magic")} className="text-kentuki-dark hover:underline">
-          Entrar con enlace mágico
+          {t("magicLink")}
         </button>
         <button onClick={() => setMode("forgot")} className="text-tinta/60 hover:underline">
-          ¿Olvidaste tu contraseña?
+          {t("forgotPassword")}
         </button>
       </div>
     </div>

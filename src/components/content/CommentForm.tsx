@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { submitComment } from "@/lib/actions/submit-comment";
 
@@ -16,10 +17,11 @@ export function CommentForm({
   b: number;
   token: string;
 }) {
+  const t = useTranslations("comment");
   const [authorName, setAuthorName] = useState("");
   const [content, setContent] = useState("");
   const [answer, setAnswer] = useState("");
-  const [website, setWebsite] = useState(""); // honeypot
+  const [website, setWebsite] = useState("");
   const [startedAt] = useState(() => Date.now());
   const [sending, setSending] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -39,20 +41,20 @@ export function CommentForm({
     });
     setSending(false);
     if (res.ok) {
-      setMsg({ ok: true, text: res.message ?? "Enviado." });
+      setMsg({ ok: true, text: res.message ?? t("success") });
       setAuthorName("");
       setContent("");
       setAnswer("");
     } else {
-      setMsg({ ok: false, text: res.error ?? "No se pudo enviar." });
+      setMsg({ ok: false, text: res.error ?? t("error") });
     }
   };
 
   return (
     <form onSubmit={onSubmit} className="mt-6 rounded-xl border border-black/10 bg-white p-5">
-      <h3 className="font-body text-lg font-bold text-tinta">Deja tu comentario</h3>
+      <h3 className="font-body text-lg font-bold text-tinta">{t("title")}</h3>
       <p className="mb-4 text-sm text-tinta/60">
-        Se publicará cuando Jorge lo revise.
+        {t("description")}
       </p>
 
       {msg && (
@@ -65,10 +67,8 @@ export function CommentForm({
         </p>
       )}
 
-      {/* Honeypot: oculto para humanos, tentador para bots */}
       <div aria-hidden className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
         <label>
-          No rellenar
           <input
             tabIndex={-1}
             autoComplete="off"
@@ -81,7 +81,7 @@ export function CommentForm({
       <div className="space-y-3">
         <input
           className={input}
-          placeholder="Tu nombre"
+          placeholder={t("namePlaceholder")}
           value={authorName}
           onChange={(e) => setAuthorName(e.target.value)}
           required
@@ -89,7 +89,7 @@ export function CommentForm({
         />
         <textarea
           className={input}
-          placeholder="Tu comentario…"
+          placeholder={t("commentPlaceholder")}
           rows={4}
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -98,7 +98,7 @@ export function CommentForm({
         />
         <div className="flex items-center gap-3">
           <label className="text-sm font-medium text-tinta">
-            Anti-spam: ¿cuánto es {a} + {b}?
+            {t("antiSpam", { a, b })}
           </label>
           <input
             className="w-20 rounded-lg border border-black/15 px-3 py-2 focus:ring-2 focus:ring-kentuki"
@@ -106,7 +106,7 @@ export function CommentForm({
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
             required
-            aria-label={`Cuánto es ${a} más ${b}`}
+            aria-label={t("antiSpam", { a, b })}
           />
         </div>
       </div>
@@ -116,7 +116,7 @@ export function CommentForm({
         disabled={sending}
         className="mt-4 rounded-lg bg-kentuki px-6 py-2.5 font-display uppercase tracking-wide text-white transition hover:bg-kentuki-dark disabled:opacity-50"
       >
-        {sending ? "Enviando…" : "Enviar comentario"}
+        {sending ? t("submitting") : t("submit")}
       </button>
     </form>
   );

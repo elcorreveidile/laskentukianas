@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export type CardArticle = {
   slug: string;
@@ -8,6 +9,8 @@ export type CardArticle = {
 };
 
 export function ArticleCard({ article }: { article: CardArticle }) {
+  const t = useTranslations("article");
+
   return (
     <Link
       href={`/${article.slug}`}
@@ -15,7 +18,6 @@ export function ArticleCard({ article }: { article: CardArticle }) {
     >
       <div className="aspect-[16/10] w-full overflow-hidden bg-kentuki-light/20">
         {article.coverImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={article.coverImage}
             alt={article.title}
@@ -34,7 +36,7 @@ export function ArticleCard({ article }: { article: CardArticle }) {
         {article.excerpt && (
           <p className="mt-2 line-clamp-3 font-serif text-tinta/70">{article.excerpt}</p>
         )}
-        <span className="mt-4 font-hand text-lg text-kentuki-dark">Leer el artículo →</span>
+        <span className="mt-4 font-hand text-lg text-kentuki-dark">{t("readArticle")}</span>
       </div>
     </Link>
   );

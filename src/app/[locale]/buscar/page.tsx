@@ -1,14 +1,19 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Buscar", robots: { index: false } };
+
+export function generateMetadata() {
+  return { title: "Buscar", robots: { index: false } };
+}
 
 export default async function BuscarPage({
   searchParams,
 }: {
   searchParams: { q?: string };
 }) {
+  const t = useTranslations("buscar");
   const q = (searchParams.q ?? "").trim();
   const resultados =
     q.length >= 2
@@ -29,16 +34,16 @@ export default async function BuscarPage({
 
   return (
     <div className="mx-auto max-w-content px-6 py-14">
-      <h1 className="mb-6 font-display text-4xl uppercase text-tinta">Buscar</h1>
+      <h1 className="mb-6 font-display text-4xl uppercase text-tinta">{t("title")}</h1>
       <form className="mb-8 flex max-w-md gap-2" action="/buscar">
         <input
           name="q"
           defaultValue={q}
-          placeholder="¿Qué buscas?"
+          placeholder={t("placeholder")}
           className="flex-1 rounded-lg border border-black/15 px-4 py-3"
         />
         <button className="rounded-lg bg-kentuki px-6 py-3 font-display uppercase text-white">
-          Buscar
+          {t("button")}
         </button>
       </form>
       {q.length >= 2 && (

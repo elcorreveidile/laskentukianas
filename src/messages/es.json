@@ -1,0 +1,202 @@
+{
+  "site": {
+    "name": "Crónicas Kentukianas",
+    "tagline": "El blog de Jorge 🥁",
+    "title": "Crónicas Kentukianas",
+    "description": "De Menorca a Kentucky: las crónicas de Jorge, un profe de español lanzado a la aventura (y a la batería).",
+    "footer": "Las crónicas de Jorge, de Menorca a Kentucky.",
+    "credit": "Desarrollo"
+  },
+  "nav": {
+    "cronicas": "Crónicas",
+    "kentukiana": "Kentukiana",
+    "garito": "El Garito 🎸",
+    "mapa": "Mapa",
+    "reto": "Reto 🇪🇸",
+    "newsletter": "No te pierdas nada",
+    "buscar": "Buscar 🔎",
+    "buscarAria": "Buscar",
+    "closeMenu": "Cerrar menú",
+    "openMenu": "Abrir menú"
+  },
+  "home": {
+    "hero": "De Menorca a Kentucky: la crónica de un profe de español que se lanzó a la aventura (y a la batería). Sube el telón.",
+    "cta": "Empezar por el principio →",
+    "sectionTitle": "Las crónicas",
+    "sectionLink": "… y las Kentukianas del aula →",
+    "empty": "Las crónicas están subiendo al escenario… vuelve en un momento.",
+    "newsletterTitle": "No te pierdas nada",
+    "newsletterDesc": "Recibe cada nueva crónica en tu correo. Sin spam, solo las aventuras de Jorge."
+  },
+  "cronicas": {
+    "title": "Las crónicas",
+    "description": "La saga completa de Jorge, de Menorca a Kentucky, crónica a crónica.",
+    "metaTitle": "Crónicas",
+    "metaDesc": "La saga completa de Jorge, de Menorca a Kentucky, crónica a crónica."
+  },
+  "kentukiana": {
+    "title": "Kentukiana",
+    "description": "Enseñar español en un aula «kentukiana»: la serie del profe.",
+    "metaTitle": "Kentukiana",
+    "metaDesc": "Enseñar español en un aula «kentukiana»: la serie del profe."
+  },
+  "garito": {
+    "title": "El Garito",
+    "metaTitle": "El Garito",
+    "metaDesc": "La música de Jorge: directos, baquetas y rock del bueno.",
+    "subtitle": "Sube el telón 🎸",
+    "description": "Jorge no solo escribe crónicas: también está detrás de la batería en Holy Crackers. Sube el telón — directo, baquetas y ruido del bueno.",
+    "liveTitle": "En directo",
+    "drumsticks": "Baquetas",
+    "hint": "Psst… ¿quieres tocar tú? Teclea rock en cualquier página. 🥁"
+  },
+  "mapa": {
+    "title": "El mapa del viaje",
+    "metaTitle": "El mapa del viaje",
+    "metaDesc": "De Menorca a Kentucky: sigue en el mapa la ruta de las crónicas de Jorge.",
+    "description": "De Menorca a Kentucky, parada a parada. Pulsa cada chincheta para saltar a su crónica."
+  },
+  "reto": {
+    "title": "Reto kentukiano",
+    "metaTitle": "Reto kentukiano",
+    "metaDesc": "Pon a prueba tu español, tu Kentucky y tu memoria de las crónicas. 10 preguntas al azar por partida.",
+    "subtitle": "¿Cuánto sabes? 🇪🇸🥁",
+    "description": "Diez preguntas al azar sobre español, Kentucky, música y las propias crónicas. ¿Serás digno de la batería de Jorge?",
+    "shuffling": "Barajando preguntas… 🥁",
+    "progress": "Pregunta {current} de {total} · Aciertos: {score}",
+    "next": "Siguiente →",
+    "result": "Ver resultado 🏁",
+    "playAgain": "Jugar otra vez 🔁"
+  },
+  "buscar": {
+    "title": "Buscar",
+    "placeholder": "¿Qué buscas?",
+    "button": "Buscar",
+    "results": "{count} resultado{plural} para «{query}»"
+  },
+  "newsletter": {
+    "metaTitle": "No te pierdas nada",
+    "metaDesc": "Suscríbete y recibe cada nueva crónica de Jorge en tu correo.",
+    "title": "No te pierdas nada",
+    "description": "Apúntate y recibe cada nueva crónica en tu correo. Sin spam, solo las aventuras de Jorge de Menorca a Kentucky.",
+    "subscribe": "Apuntarme",
+    "success": "¡Suscrito!",
+    "error": "No se pudo suscribir.",
+    "unsubscribe": "Te puedes dar de baja cuando quieras."
+  },
+  "article": {
+    "series": {
+      "CRONICAS": "Crónica",
+      "KENTUKIANA": "Kentukiana",
+      "PAGINA": "Página"
+    },
+    "by": "Por {name}",
+    "comments": "Comentarios",
+    "commentsCount": "Comentarios ({count})",
+    "noComments": "Todavía no hay comentarios. ¡Sé el primero!",
+    "readArticle": "Leer el artículo →",
+    "notFound": "No encontrado"
+  },
+  "comment": {
+    "title": "Deja tu comentario",
+    "description": "Se publicará cuando Jorge lo revise.",
+    "namePlaceholder": "Tu nombre",
+    "commentPlaceholder": "Tu comentario…",
+    "antiSpam": "Anti-spam: ¿cuánto es {a} + {b}?",
+    "submit": "Enviar comentario",
+    "submitting": "Enviando…",
+    "success": "Enviado.",
+    "error": "No se pudo enviar."
+  },
+  "login": {
+    "title": "Acceso",
+    "google": "Entrar con Google",
+    "entering": "Entrando…",
+    "enter": "Entrar",
+    "magicLink": "Entrar con enlace mágico",
+    "magicLinkDesc": "Te enviamos un enlace de acceso al correo. Sin contraseña.",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "back": "← Volver",
+    "backToSite": "← Volver al sitio",
+    "toPanel": "Ir al panel →",
+    "magicLinkPage": {
+      "title": "Enlace mágico",
+      "description": "Pulsa el botón para entrar en tu cuenta de Crónicas Kentukianas.",
+      "expires": "El enlace caduca en 1 hora y solo puede usarse una vez.",
+      "invalid": "Este enlace no es válido o está incompleto. Solicita uno nuevo desde la página de acceso.",
+      "backToAccess": "Volver al acceso"
+    },
+    "magicForm": {
+      "namePlaceholder": "Tu nombre",
+      "emailPlaceholder": "tu@email.com",
+      "challenge": "¿Cuánto es {a} + {b}?",
+      "sending": "Enviando…",
+      "submit": "Enviarme un enlace de acceso",
+      "sent": "Revisa tu correo 📬",
+      "sentDesc": "Si los datos son correctos, te hemos enviado un enlace para entrar. Caduca en 1 hora.",
+      "challengeError": "La operación no es correcta. Prueba con la nueva.",
+      "error": "No se pudo enviar el enlace.",
+      "errorRetry": "No se pudo enviar el enlace. Inténtalo de nuevo."
+    },
+    "errors": {
+      "EmailSignin": "El enlace mágico no es válido o ha caducado. Pide uno nuevo.",
+      "Verification": "El enlace no es válido o está incompleto.",
+      "OAuthAccountNotLinked": "Ese email ya está registrado con otro método."
+    },
+    "forgot": {
+      "title": "Recuperar contraseña",
+      "sent": "Si existe una cuenta con ese correo, te hemos enviado instrucciones para restablecer la contraseña. Caduca en 1 hora.",
+      "sending": "Enviando…",
+      "submit": "Enviar enlace de recuperación"
+    }
+  },
+  "resetPassword": {
+    "title": "Nueva contraseña",
+    "invalid": "El enlace no es válido o está incompleto.",
+    "backToAccess": "Volver al acceso",
+    "for": "Para {email}",
+    "newPassword": "Nueva contraseña",
+    "repeatPassword": "Repite la contraseña",
+    "placeholder": "Mínimo 8 caracteres",
+    "saving": "Guardando…",
+    "save": "Guardar contraseña",
+    "mismatch": "Las contraseñas no coinciden",
+    "error": "No se pudo restablecer la contraseña",
+    "errorRetry": "No se pudo restablecer la contraseña. Inténtalo de nuevo.",
+    "success": "Contraseña actualizada ✅",
+    "login": "Iniciar sesión",
+    "loading": "Cargando…"
+  },
+  "intro": {
+    "aria": "Bienvenida",
+    "kicker": "Directo desde el garito 🎸",
+    "sound": "🔊 Con sonido",
+    "mute": "🔇 Silenciar",
+    "enter": "Entrar al garito →",
+    "skip": "saltar intro"
+  },
+  "drum": {
+    "title": "🥁 La batería de Jorge",
+    "close": "Cerrar (Esc)",
+    "description": "Toca con el ratón o con el teclado. El bombo es la barra espaciadora.",
+    "riff": "▶ Riff de Jorge",
+    "space": "espacio",
+    "pads": {
+      "crash": "Crash",
+      "hihat": "Hi-hat",
+      "openhat": "Open hat",
+      "tom": "Tom",
+      "tom2": "Tom 2",
+      "snare": "Caja",
+      "kick": "Bombo (espacio)"
+    }
+  },
+  "scrollToTop": {
+    "aria": "Volver arriba"
+  },
+  "language": {
+    "es": "Español",
+    "en": "English",
+    "switch": "Language"
+  }
+}

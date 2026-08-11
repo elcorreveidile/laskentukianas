@@ -1,14 +1,22 @@
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { db } from "@/lib/db";
 import { ArticleCard } from "@/components/content/ArticleCard";
 
 export const dynamic = "force-dynamic";
-export const metadata = {
-  title: "Crónicas",
-  description: "La saga completa de Jorge, de Menorca a Kentucky, crónica a crónica.",
-  alternates: { canonical: "/cronicas" },
-};
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "cronicas" });
+  return {
+    title: t("metaTitle"),
+    description: t("metaDesc"),
+    alternates: { canonical: `/${locale}/cronicas` },
+  };
+}
 
 export default async function CronicasPage() {
+  const t = useTranslations("cronicas");
   const articles = await db.article
     .findMany({
       where: { status: "PUBLISHED", series: "CRONICAS" },
@@ -19,9 +27,9 @@ export default async function CronicasPage() {
 
   return (
     <div className="mx-auto max-w-content px-6 py-14">
-      <h1 className="mb-2 font-display text-4xl uppercase text-tinta">Las crónicas</h1>
+      <h1 className="mb-2 font-display text-4xl uppercase text-tinta">{t("title")}</h1>
       <p className="mb-10 font-serif text-lg text-tinta/70">
-        La saga completa, de Menorca a Kentucky.
+        {t("description")}
       </p>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((a) => (

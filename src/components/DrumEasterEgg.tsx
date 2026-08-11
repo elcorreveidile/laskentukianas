@@ -1,24 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-/**
- * Easter egg: la batería de Jorge. Se abre con el código Konami
- * (↑ ↑ ↓ ↓ ← → ← → B A) o tecleando "rock". Se toca con el teclado o el ratón.
- * Sonidos sintetizados con Web Audio (sin archivos).
- */
+import { useTranslations } from "next-intl";
 
 type Piece = "kick" | "snare" | "hihat" | "openhat" | "tom" | "tom2" | "crash";
 
-const PADS: { piece: Piece; key: string; label: string; span?: boolean }[] = [
-  { piece: "crash", key: "q", label: "Crash" },
-  { piece: "hihat", key: "w", label: "Hi-hat" },
-  { piece: "openhat", key: "e", label: "Open hat" },
-  { piece: "tom", key: "a", label: "Tom" },
-  { piece: "tom2", key: "s", label: "Tom 2" },
-  { piece: "snare", key: "d", label: "Caja" },
-  { piece: "kick", key: " ", label: "Bombo (espacio)", span: true },
-];
+function usePads(): { piece: Piece; key: string; label: string; span?: boolean }[] {
+  const t = useTranslations("drum.pads");
+  return [
+    { piece: "crash", key: "q", label: t("crash") },
+    { piece: "hihat", key: "w", label: t("hihat") },
+    { piece: "openhat", key: "e", label: t("openhat") },
+    { piece: "tom", key: "a", label: t("tom") },
+    { piece: "tom2", key: "s", label: t("tom2") },
+    { piece: "snare", key: "d", label: t("snare") },
+    { piece: "kick", key: " ", label: t("kick"), span: true },
+  ];
+}
 
 const KONAMI = [
   "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
@@ -26,6 +24,8 @@ const KONAMI = [
 ];
 
 export default function DrumEasterEgg() {
+  const t = useTranslations("drum");
+  const PADS = usePads();
   const [open, setOpen] = useState(false);
   const [flash, setFlash] = useState<Piece | null>(null);
   const ctxRef = useRef<AudioContext | null>(null);
@@ -53,13 +53,13 @@ export default function DrumEasterEgg() {
 
   const hit = (piece: Piece) => {
     const ctx = ac();
-    const t = ctx.currentTime;
+    const t0 = ctx.currentTime;
     const out = ctx.destination;
 
     const env = (g: GainNode, peak: number, dur: number) => {
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(peak, t + 0.003);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(peak, t0 + 0.003);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
     };
     const noise = (dur: number, hp: number, peak: number) => {
       const src = ctx.createBufferSource();
@@ -70,19 +70,19 @@ export default function DrumEasterEgg() {
       const g = ctx.createGain();
       env(g, peak, dur);
       src.connect(filt).connect(g).connect(out);
-      src.start(t);
-      src.stop(t + dur);
+      src.start(t0);
+      src.stop(t0 + dur);
     };
 
     if (piece === "kick") {
       const o = ctx.createOscillator();
       const g = ctx.createGain();
-      o.frequency.setValueAtTime(150, t);
-      o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
+      o.frequency.setValueAtTime(150, t0);
+      o.frequency.exponentialRampToValueAtTime(45, t0 + 0.12);
       env(g, 1, 0.35);
       o.connect(g).connect(out);
-      o.start(t);
-      o.stop(t + 0.35);
+      o.start(t0);
+      o.stop(t0 + 0.35);
     } else if (piece === "snare") {
       noise(0.2, 1800, 0.7);
       const o = ctx.createOscillator();
@@ -91,8 +91,8 @@ export default function DrumEasterEgg() {
       const g = ctx.createGain();
       env(g, 0.4, 0.15);
       o.connect(g).connect(out);
-      o.start(t);
-      o.stop(t + 0.15);
+      o.start(t0);
+      o.stop(t0 + 0.15);
     } else if (piece === "hihat") {
       noise(0.05, 7000, 0.5);
     } else if (piece === "openhat") {
@@ -100,21 +100,21 @@ export default function DrumEasterEgg() {
     } else if (piece === "tom") {
       const o = ctx.createOscillator();
       const g = ctx.createGain();
-      o.frequency.setValueAtTime(160, t);
-      o.frequency.exponentialRampToValueAtTime(90, t + 0.2);
+      o.frequency.setValueAtTime(160, t0);
+      o.frequency.exponentialRampToValueAtTime(90, t0 + 0.2);
       env(g, 0.9, 0.3);
       o.connect(g).connect(out);
-      o.start(t);
-      o.stop(t + 0.3);
+      o.start(t0);
+      o.stop(t0 + 0.3);
     } else if (piece === "tom2") {
       const o = ctx.createOscillator();
       const g = ctx.createGain();
-      o.frequency.setValueAtTime(110, t);
-      o.frequency.exponentialRampToValueAtTime(65, t + 0.25);
+      o.frequency.setValueAtTime(110, t0);
+      o.frequency.exponentialRampToValueAtTime(65, t0 + 0.25);
       env(g, 0.9, 0.35);
       o.connect(g).connect(out);
-      o.start(t);
-      o.stop(t + 0.35);
+      o.start(t0);
+      o.stop(t0 + 0.35);
     } else if (piece === "crash") {
       noise(0.9, 5000, 0.5);
     }
@@ -123,7 +123,6 @@ export default function DrumEasterEgg() {
     window.setTimeout(() => setFlash((f) => (f === piece ? null : f)), 90);
   };
 
-  // riff de bienvenida
   const riff = () => {
     const seq: [Piece, number][] = [
       ["kick", 0], ["hihat", 0], ["hihat", 200], ["snare", 400], ["hihat", 400],
@@ -133,11 +132,9 @@ export default function DrumEasterEgg() {
     seq.forEach(([p, ms]) => window.setTimeout(() => hit(p), ms));
   };
 
-  // Triggers globales
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (open) return; // dentro del overlay se maneja aparte
-      // Konami
+      if (open) return;
       konami.current.push(e.key);
       konami.current = konami.current.slice(-KONAMI.length);
       if (KONAMI.every((k, i) => konami.current[i]?.toLowerCase() === k.toLowerCase())) {
@@ -145,7 +142,6 @@ export default function DrumEasterEgg() {
         konami.current = [];
         return;
       }
-      // teclear "rock"
       if (/^[a-zA-Z]$/.test(e.key)) {
         typed.current = (typed.current + e.key.toLowerCase()).slice(-4);
         if (typed.current === "rock") {
@@ -158,7 +154,6 @@ export default function DrumEasterEgg() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Teclado dentro del overlay
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -174,7 +169,7 @@ export default function DrumEasterEgg() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, PADS]);
 
   if (!open) return null;
 
@@ -183,17 +178,17 @@ export default function DrumEasterEgg() {
       <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-gradient-to-b from-[#171326] to-[#0b0910] p-6 text-white shadow-2xl">
         <div className="mb-1 flex items-center justify-between">
           <h2 className="font-display text-2xl uppercase tracking-wide text-ambar">
-            🥁 La batería de Jorge
+            {t("title")}
           </h2>
           <button
             onClick={() => setOpen(false)}
             className="rounded-full bg-white/10 px-3 py-1 text-sm hover:bg-white/20"
           >
-            Cerrar (Esc)
+            {t("close")}
           </button>
         </div>
         <p className="mb-5 text-sm text-white/60">
-          Toca con el ratón o con el teclado. El bombo es la barra espaciadora.
+          {t("description")}
         </p>
 
         <div className="grid grid-cols-3 gap-3">
@@ -211,7 +206,7 @@ export default function DrumEasterEgg() {
             >
               <span className="font-display text-lg uppercase">{p.label}</span>
               <span className="mt-1 rounded bg-white/10 px-2 text-xs uppercase text-white/60">
-                {p.key === " " ? "espacio" : p.key}
+                {p.key === " " ? t("space") : p.key}
               </span>
             </button>
           ))}
@@ -222,7 +217,7 @@ export default function DrumEasterEgg() {
             onClick={riff}
             className="rounded-full bg-neon px-6 py-2 font-display uppercase tracking-wide text-white transition hover:opacity-90"
           >
-            ▶ Riff de Jorge
+            {t("riff")}
           </button>
         </div>
       </div>

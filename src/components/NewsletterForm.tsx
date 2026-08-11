@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { subscribeNewsletter } from "@/lib/actions/newsletter";
 
 export function NewsletterForm() {
+  const t = useTranslations("newsletter");
   const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState(""); // honeypot
+  const [website, setWebsite] = useState("");
   const [sending, setSending] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -16,16 +18,15 @@ export function NewsletterForm() {
     const res = await subscribeNewsletter({ email, website });
     setSending(false);
     if (res.ok) {
-      setMsg({ ok: true, text: res.message ?? "¡Suscrito!" });
+      setMsg({ ok: true, text: res.message ?? t("success") });
       setEmail("");
     } else {
-      setMsg({ ok: false, text: res.error ?? "No se pudo suscribir." });
+      setMsg({ ok: false, text: res.error ?? t("error") });
     }
   };
 
   return (
     <form onSubmit={onSubmit} className="mx-auto mt-8 max-w-md">
-      {/* Honeypot */}
       <div aria-hidden className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
         <input
           tabIndex={-1}
@@ -49,7 +50,7 @@ export function NewsletterForm() {
           disabled={sending}
           className="rounded-lg bg-kentuki px-6 py-3 font-display uppercase tracking-wide text-white transition hover:bg-kentuki-dark disabled:opacity-50"
         >
-          {sending ? "…" : "Apuntarme"}
+          {sending ? "…" : t("subscribe")}
         </button>
       </div>
 
