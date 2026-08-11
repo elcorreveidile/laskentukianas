@@ -9,7 +9,6 @@ import DrumEasterEgg from "@/components/DrumEasterEgg";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 const display = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
@@ -96,7 +95,6 @@ export default async function LocaleLayout({
           <main className="flex-1">{children}</main>
           <Footer />
           <ScrollToTop />
-          <LanguageSwitcher />
         </NextIntlClientProvider>
       </body>
     </html>

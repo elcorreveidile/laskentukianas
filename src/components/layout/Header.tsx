@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { useState } from "react";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 function LogoBadge() {
   return (
@@ -47,6 +48,7 @@ export function Header() {
           <Link href="/buscar" aria-label={t("buscarAria")} className="transition hover:text-kentuki">
             🔎
           </Link>
+          <LanguageSwitcher />
         </nav>
 
         <button
@@ -97,6 +99,9 @@ export function Header() {
             >
               {t("buscar")}
             </Link>
+            <div className="mt-2 border-t border-black/10 px-3 pt-3">
+              <LanguageSwitcher />
+            </div>
           </div>
         </nav>
       )}
