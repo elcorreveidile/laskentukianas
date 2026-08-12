@@ -29,8 +29,7 @@ export function SendAnnouncement() {
     <div className="rounded-xl border border-black/10 bg-white p-6 shadow-card">
       <h2 className="font-display text-xl uppercase text-tinta">Enviar aviso a la lista</h2>
       <p className="mt-1 text-sm text-tinta/60">
-        Crea la campaña en Brevo (con diseño de marca y baja automática). Puedes crear un
-        borrador para revisarlo allí, o enviarlo ya a toda la lista.
+        Crea la campaña en Brevo (con diseño de marca y baja automática) y la envía a toda la lista.
       </p>
 
       <label className="mt-4 block text-sm font-semibold text-tinta">Asunto</label>
@@ -52,14 +51,6 @@ export function SendAnnouncement() {
       </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-3">
-        <button
-          onClick={() => run(false)}
-          disabled={pending}
-          className="rounded-full border border-kentuki px-5 py-2.5 font-body font-semibold text-kentuki-dark transition hover:bg-kentuki/5 disabled:opacity-40"
-        >
-          {pending ? "…" : "Crear borrador en Brevo"}
-        </button>
-
         {!confirming ? (
           <button
             onClick={() => setConfirming(true)}
