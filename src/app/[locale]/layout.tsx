@@ -3,6 +3,7 @@ import { Anton, Inter, Crimson_Text, Caveat } from "next/font/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { auth } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import IntroOverlay from "@/components/IntroOverlay";
 import DrumEasterEgg from "@/components/DrumEasterEgg";
@@ -82,6 +83,10 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const session = await auth();
+  const userName = session?.user
+    ? session.user.name ?? session.user.email ?? null
+    : null;
 
   return (
     <html
@@ -93,7 +98,7 @@ export default async function LocaleLayout({
           <LocaleAlternatesProvider>
             <IntroOverlay />
             <DrumEasterEgg />
-            <Header />
+            <Header userName={userName} />
             <main className="flex-1">{children}</main>
             <Footer />
             <ScrollToTop />

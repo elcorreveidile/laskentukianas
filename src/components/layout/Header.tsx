@@ -3,8 +3,10 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import NextLink from "next/link";
+import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { UserMenu } from "./UserMenu";
 
 function LogoBadge() {
   return (
@@ -20,7 +22,7 @@ function LogoBadge() {
   );
 }
 
-export function Header() {
+export function Header({ userName }: { userName: string | null }) {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
@@ -49,10 +51,8 @@ export function Header() {
           <Link href="/buscar" aria-label={t("buscarAria")} className="transition hover:text-kentuki">
             🔎
           </Link>
-          <NextLink href="/admin" className="text-tinta/50 transition hover:text-kentuki">
-            {t("admin")}
-          </NextLink>
           <LanguageSwitcher />
+          {userName && <UserMenu userName={userName} />}
         </nav>
 
         <button
@@ -103,16 +103,28 @@ export function Header() {
             >
               {t("buscar")}
             </Link>
-            <NextLink
-              href="/admin"
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-3 text-tinta/60 transition hover:bg-black/5 hover:text-kentuki"
-            >
-              {t("admin")}
-            </NextLink>
             <div className="mt-2 border-t border-black/10 px-3 pt-3">
               <LanguageSwitcher />
             </div>
+            {userName && (
+              <div className="mt-2 border-t border-black/10 px-3 pt-3">
+                <p className="py-1 text-sm text-tinta/60">👤 {userName}</p>
+                <NextLink
+                  href="/admin"
+                  onClick={() => setOpen(false)}
+                  className="block rounded-lg py-2 text-tinta transition hover:text-kentuki"
+                >
+                  {t("admin")}
+                </NextLink>
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="block w-full rounded-lg py-2 text-left font-medium text-red-600 transition hover:text-red-800"
+                >
+                  {t("signOut")}
+                </button>
+              </div>
+            )}
           </div>
         </nav>
       )}
