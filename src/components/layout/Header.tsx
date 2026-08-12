@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import NextLink from "next/link";
 import { signOut } from "next-auth/react";
+import { User } from "lucide-react";
 import { useState } from "react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { UserMenu } from "./UserMenu";
@@ -108,7 +109,10 @@ export function Header({ userName }: { userName: string | null }) {
             </div>
             {userName && (
               <div className="mt-2 border-t border-black/10 px-3 pt-3">
-                <p className="py-1 text-sm text-tinta/60">👤 {userName}</p>
+                <p className="flex items-center gap-1.5 py-1 text-sm text-tinta/60">
+                  <User className="h-4 w-4 shrink-0" aria-hidden />
+                  {userName}
+                </p>
                 <NextLink
                   href="/admin"
                   onClick={() => setOpen(false)}

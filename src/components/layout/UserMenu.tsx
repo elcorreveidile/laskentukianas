@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 /** Menú de usuario para el Header cuando hay sesión (escritorio). */
@@ -28,7 +29,7 @@ export function UserMenu({ userName }: { userName: string }) {
         aria-expanded={open}
         className="flex items-center gap-1.5 rounded-full border border-black/10 bg-white/60 px-3 py-1 text-sm text-tinta transition hover:bg-black/5"
       >
-        <span aria-hidden>👤</span>
+        <User className="h-4 w-4 shrink-0" aria-hidden />
         <span className="max-w-[12ch] truncate">{userName}</span>
       </button>
       {open && (
