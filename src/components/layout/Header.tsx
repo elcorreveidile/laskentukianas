@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import NextLink from "next/link";
 import { useState } from "react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -48,6 +49,9 @@ export function Header() {
           <Link href="/buscar" aria-label={t("buscarAria")} className="transition hover:text-kentuki">
             🔎
           </Link>
+          <NextLink href="/admin" className="text-tinta/50 transition hover:text-kentuki">
+            {t("admin")}
+          </NextLink>
           <LanguageSwitcher />
         </nav>
 
@@ -99,6 +103,13 @@ export function Header() {
             >
               {t("buscar")}
             </Link>
+            <NextLink
+              href="/admin"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-3 text-tinta/60 transition hover:bg-black/5 hover:text-kentuki"
+            >
+              {t("admin")}
+            </NextLink>
             <div className="mt-2 border-t border-black/10 px-3 pt-3">
               <LanguageSwitcher />
             </div>
