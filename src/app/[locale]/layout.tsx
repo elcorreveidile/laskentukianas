@@ -100,7 +100,7 @@ export default async function LocaleLayout({
             <DrumEasterEgg />
             <Header userName={userName} />
             <main className="flex-1">{children}</main>
-            <Footer />
+            <Footer loggedIn={!!userName} />
             <ScrollToTop />
           </LocaleAlternatesProvider>
         </NextIntlClientProvider>

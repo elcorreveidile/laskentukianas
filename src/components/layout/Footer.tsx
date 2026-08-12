@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Por2DurosCredit } from "@/components/Por2DurosCredit";
 
-export function Footer() {
+export function Footer({ loggedIn = false }: { loggedIn?: boolean }) {
   const t = useTranslations("site");
   const tNav = useTranslations("nav");
 
@@ -17,6 +17,9 @@ export function Footer() {
           <Link href="/cronicas" className="hover:text-kentuki">{tNav("cronicas")}</Link>
           <Link href="/kentukiana" className="hover:text-kentuki">{tNav("kentukiana")}</Link>
           <Link href="/newsletter" className="hover:text-kentuki">{tNav("newsletter")}</Link>
+          {!loggedIn && (
+            <Link href="/login" className="text-tinta/40 hover:text-kentuki">{tNav("login")}</Link>
+          )}
         </nav>
         <p className="mt-4 text-xs text-tinta/60">
           <Por2DurosCredit />
