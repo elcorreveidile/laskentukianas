@@ -30,7 +30,7 @@ const ArticleSchema = z.object({
   excerpt: z.string().optional().nullable(),
   content: z.string().min(1, "El contenido es obligatorio"),
   coverImage: z.string().optional().nullable(),
-  series: z.enum(["CRONICAS", "KENTUKIANA", "PAGINA"]),
+  series: z.enum(["CRONICAS", "KENTUKIANA", "MENORQUIANA", "PAGINA"]),
   order: z.coerce.number().int().default(0),
   status: z.enum(["DRAFT", "REVIEW", "PUBLISHED", "ARCHIVED"]),
   byline: z.string().optional().nullable(),
@@ -103,6 +103,7 @@ export async function saveArticle(input: ArticleInput) {
   revalidatePath("/");
   revalidatePath("/cronicas");
   revalidatePath("/kentukiana");
+  revalidatePath("/menorquianas");
   revalidatePath(`/${article.slug}`);
   revalidatePath("/admin/articulos");
   return { id: article.id, slug: article.slug };

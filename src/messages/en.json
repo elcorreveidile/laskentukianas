@@ -4,12 +4,13 @@
     "tagline": "Jorge's blog 🥁",
     "title": "Crónicas Kentukianas",
     "description": "From Menorca to Kentucky: the chronicles of Jorge, a Spanish teacher who threw himself into the adventure (and the drums).",
-    "footer": "The chronicles of Jorge, from Menorca to Kentucky.",
+    "footer": "From Menorca to Kentucky.",
     "credit": "Development"
   },
   "nav": {
     "cronicas": "Chronicles",
-    "kentukiana": "Kentukiana",
+    "kentukiana": "Kentukianas",
+    "menorquianas": "Menorquianas",
     "garito": "El Garito 🎸",
     "mapa": "Map",
     "reto": "Challenge 🇪🇸",
@@ -42,6 +43,16 @@
     "description": "Teaching Spanish in a «Kentucky» classroom: the teacher's series.",
     "metaTitle": "Kentukiana",
     "metaDesc": "Teaching Spanish in a «Kentucky» classroom: the teacher's series."
+  },
+  "instagram": {
+    "heading": "Follow us on Instagram"
+  },
+  "menorquianas": {
+    "title": "Menorquianas",
+    "description": "From Kentucky to Menorca: the teacher's new chapter.",
+    "metaTitle": "Menorquianas",
+    "metaDesc": "From Kentucky to Menorca: coordinating a reading-comprehension programme run by the Balearic Islands.",
+    "intro": "From Kentucky to Menorca. A new chapter begins here: I'm coordinating a reading-comprehension programme run by the Balearic Islands at my school, and I'll keep writing it all down just like always. To the old commenters of the Kentukiana Chronicles: this isn't a goodbye, it's a «see you in the next one». Welcome to the Menorquianas."
   },
   "garito": {
     "title": "El Garito",

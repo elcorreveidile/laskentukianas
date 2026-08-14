@@ -30,6 +30,7 @@ export function Header({ userName }: { userName: string | null }) {
   const nav = [
     { href: "/cronicas", label: t("cronicas") },
     { href: "/kentukiana", label: t("kentukiana") },
+    { href: "/menorquianas", label: t("menorquianas") },
     { href: "/garito", label: t("garito") },
     { href: "/mapa", label: t("mapa") },
     { href: "/reto", label: t("reto") },

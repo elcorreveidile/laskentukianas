@@ -13,6 +13,7 @@ const STATUS: Record<string, { label: string; cls: string }> = {
 const SERIE: Record<string, string> = {
   CRONICAS: "Crónica",
   KENTUKIANA: "Kentukiana",
+  MENORQUIANA: "Menorquianas",
   PAGINA: "Página",
 };
 

@@ -4,12 +4,13 @@
     "tagline": "El blog de Jorge 🥁",
     "title": "Crónicas Kentukianas",
     "description": "De Menorca a Kentucky: las crónicas de Jorge, un profe de español lanzado a la aventura (y a la batería).",
-    "footer": "Las crónicas de Jorge, de Menorca a Kentucky.",
+    "footer": "De Menorca a Kentucky.",
     "credit": "Desarrollo"
   },
   "nav": {
     "cronicas": "Crónicas",
-    "kentukiana": "Kentukiana",
+    "kentukiana": "Kentukianas",
+    "menorquianas": "Menorquianas",
     "garito": "El Garito 🎸",
     "mapa": "Mapa",
     "reto": "Reto 🇪🇸",
@@ -42,6 +43,16 @@
     "description": "Enseñar español en un aula «kentukiana»: la serie del profe.",
     "metaTitle": "Kentukiana",
     "metaDesc": "Enseñar español en un aula «kentukiana»: la serie del profe."
+  },
+  "instagram": {
+    "heading": "Síguenos en Instagram"
+  },
+  "menorquianas": {
+    "title": "Menorquianas",
+    "description": "De Kentucky a Menorca: la nueva etapa del profe.",
+    "metaTitle": "Menorquianas",
+    "metaDesc": "De Kentucky a Menorca: coordinando un programa de comprensión lectora impulsado por las Islas Baleares.",
+    "intro": "De Kentucky a Menorca. Aquí arranca una etapa nueva: coordino en mi centro un programa de comprensión lectora impulsado por las Islas Baleares, y voy a seguir contándolo todo como siempre. A los antiguos comentaristas de las Crónicas Kentukianas: esto no es una despedida, es un «nos vemos en la siguiente». Bienvenidos a las Menorquianas."
   },
   "garito": {
     "title": "El Garito",

@@ -30,7 +30,7 @@ async function getArticles(): Promise<ArticleRow[]> {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await getArticles();
 
-  const staticPaths = ["", "/cronicas", "/kentukiana", "/garito", "/mapa", "/reto", "/newsletter"];
+  const staticPaths = ["", "/cronicas", "/kentukiana", "/menorquianas", "/garito", "/mapa", "/reto", "/newsletter"];
 
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((p) => ({
     url: `${SITE}/${routing.defaultLocale}${p}`,

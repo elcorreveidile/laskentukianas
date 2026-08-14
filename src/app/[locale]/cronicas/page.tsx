@@ -1,5 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { ArticleCard } from "@/components/content/ArticleCard";
+import { InstagramFeed } from "@/components/InstagramFeed";
+import { INSTAGRAM } from "@/lib/instagram";
 import { listArticleCards, type AppLocale } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
@@ -37,6 +39,7 @@ export default async function CronicasPage() {
           <ArticleCard key={a.slug} article={a} />
         ))}
       </div>
+      <InstagramFeed posts={INSTAGRAM.postsKentucky} />
     </div>
   );
 }

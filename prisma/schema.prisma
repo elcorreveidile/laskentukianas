@@ -219,5 +219,6 @@ enum ContentStatus {
 enum Series {
   CRONICAS
   KENTUKIANA
+  MENORQUIANA
   PAGINA
 }

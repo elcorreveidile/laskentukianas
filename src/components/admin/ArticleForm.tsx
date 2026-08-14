@@ -13,7 +13,7 @@ type Initial = {
   excerpt?: string | null;
   content?: string;
   coverImage?: string | null;
-  series?: "CRONICAS" | "KENTUKIANA" | "PAGINA";
+  series?: "CRONICAS" | "KENTUKIANA" | "MENORQUIANA" | "PAGINA";
   order?: number;
   status?: "DRAFT" | "REVIEW" | "PUBLISHED" | "ARCHIVED";
   byline?: string | null;
@@ -94,6 +94,7 @@ export function ArticleForm({ initial }: { initial?: Initial }) {
           <select className={input} value={series} onChange={(e) => setSeries(e.target.value as Initial["series"] || "CRONICAS")}>
             <option value="CRONICAS">Crónicas</option>
             <option value="KENTUKIANA">Kentukiana</option>
+            <option value="MENORQUIANA">Menorquianas</option>
             <option value="PAGINA">Página</option>
           </select>
         </div>
