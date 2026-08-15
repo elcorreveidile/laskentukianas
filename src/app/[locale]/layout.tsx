@@ -11,6 +11,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { LocaleAlternatesProvider } from "@/components/i18n/LocaleAlternates";
+import { Analytics } from "@vercel/analytics/next";
 
 const display = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
@@ -104,6 +105,7 @@ export default async function LocaleLayout({
             <ScrollToTop />
           </LocaleAlternatesProvider>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
