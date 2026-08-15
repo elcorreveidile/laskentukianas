@@ -18,6 +18,7 @@ export function ArticleCard({ article }: { article: CardArticle }) {
     >
       <div className="aspect-[16/10] w-full overflow-hidden bg-kentuki-light/20">
         {article.coverImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={article.coverImage}
             alt={article.title}

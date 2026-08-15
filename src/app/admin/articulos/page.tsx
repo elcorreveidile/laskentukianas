@@ -17,11 +17,24 @@ const SERIE: Record<string, string> = {
   PAGINA: "Página",
 };
 
-export default async function AdminArticulos() {
+const PAGE_SIZE = 20;
+
+export default async function AdminArticulos({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
+  const where = { NOT: { status: "ARCHIVED" as const } };
+  const total = await db.article.count({ where });
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const page = Math.min(Math.max(1, Number(searchParams.page) || 1), totalPages);
+
   const articles = await db.article.findMany({
-    where: { NOT: { status: "ARCHIVED" } },
+    where,
     orderBy: [{ series: "asc" }, { order: "asc" }],
     select: { id: true, title: true, series: true, status: true, order: true },
+    skip: (page - 1) * PAGE_SIZE,
+    take: PAGE_SIZE,
   });
   return (
     <div>
@@ -60,6 +73,34 @@ export default async function AdminArticulos() {
           </div>
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="mt-4 flex items-center justify-between text-sm text-tinta/60">
+          {page > 1 ? (
+            <Link
+              href={`/admin/articulos?page=${page - 1}`}
+              className="rounded-lg border border-black/10 px-3 py-1.5 hover:bg-black/5"
+            >
+              ← Anterior
+            </Link>
+          ) : (
+            <span className="rounded-lg border border-black/10 px-3 py-1.5 opacity-40">← Anterior</span>
+          )}
+          <span>
+            Página {page} de {totalPages} · {total} artículos
+          </span>
+          {page < totalPages ? (
+            <Link
+              href={`/admin/articulos?page=${page + 1}`}
+              className="rounded-lg border border-black/10 px-3 py-1.5 hover:bg-black/5"
+            >
+              Siguiente →
+            </Link>
+          ) : (
+            <span className="rounded-lg border border-black/10 px-3 py-1.5 opacity-40">Siguiente →</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -118,6 +118,7 @@ export default async function ArticlePage({
       </p>
 
       {base.coverImage && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={base.coverImage}
           alt={title}
