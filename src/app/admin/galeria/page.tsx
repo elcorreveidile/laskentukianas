@@ -5,7 +5,9 @@ import { deleteGalleryImage, moveGalleryImage } from "@/lib/actions/gallery";
 export const dynamic = "force-dynamic";
 
 export default async function AdminGaleria() {
-  const images = await db.galleryImage.findMany({ orderBy: { order: "asc" } });
+  const images = await db.galleryImage.findMany({
+    orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+  });
 
   return (
     <div>

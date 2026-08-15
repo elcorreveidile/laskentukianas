@@ -2,8 +2,10 @@
 
 **Fecha / Date:** 15 agosto 2026 / August 15, 2026  
 **Alcance / Scope:** código fuente completo del proyecto Next.js 14 (bilingual es/en) / Full source code of the Next.js 14 project  
-**Resultado / Result:** 22 incidencias encontradas (3 críticas, 6 altas, 9 medias, 4 bajas) — todas corregidas y build verificado.  
-22 issues found (3 critical, 6 high, 9 medium, 4 low) — all fixed and build verified.
+**Resultado / Result:** 20 incidencias documentadas (3 críticas, 6 altas, 7 medias, 4 bajas). 18 corregidas; L3 y L4 se dejan como están de forma deliberada (ver detalle).  
+20 documented issues (3 critical, 6 high, 7 medium, 4 low). 18 fixed; L3 and L4 intentionally left as-is (see details).
+
+> **Actualización post-revisión (15 ago 2026) / Post-review update:** Una revisión posterior detectó que el conteo original («22 / 9 medias») estaba inflado: las incidencias realmente documentadas y corregidas son 20 (7 medias). **No existieron M3 ni M4** — el hueco de numeración es intencional (se conservan los IDs originales M5–M9 para no romper la trazabilidad con el commit). Además se reforzaron los caveats de H2, H3 y H5 (ver esas secciones). / A later review found the original count ("22 / 9 medium") was inflated: the real documented, fixed count is 20 (7 medium). **M3 and M4 never existed** — the numbering gap is intentional (original IDs M5–M9 kept for commit traceability). Caveats for H2, H3 and H5 were also hardened (see those sections).
 
 ---
 
@@ -13,8 +15,9 @@
 |-----------|-------|--------|
 | CRÍTICA / CRITICAL   | 3     | Corregidas / Fixed |
 | ALTA / HIGH      | 6     | Corregidas / Fixed |
-| MEDIA / MEDIUM     | 9     | Corregidas / Fixed |
-| BAJA / LOW      | 4     | Corregidas / Fixed |
+| MEDIA / MEDIUM     | 7     | Corregidas / Fixed |
+| BAJA / LOW      | 4     | 2 corregidas, 2 as-is / 2 fixed, 2 as-is |
+| **TOTAL** | **20** | **18 corregidas / fixed** |
 
 ---
 
@@ -86,9 +89,11 @@
 
 **Problem:** The last `order` was read with `findFirst` and then a new image was created with `order + 1` outside a transaction. Two concurrent requests could get the same `order`.
 
-**Solución:** Envolver el `findFirst` + `create` en `db.$transaction()` para que la lectura y escritura sean atómicas.
+**Solución:** Envolver el `findFirst` + `create` en `db.$transaction()`.
 
-**Fix:** Wrapped the `findFirst` + `create` in `db.$transaction()` so the read and write are atomic.
+**Fix:** Wrapped the `findFirst` + `create` in `db.$transaction()`.
+
+> **Actualización (post-revisión):** Envolver `findFirst`+`create` en una transacción **no** garantiza por sí solo la atomicidad bajo el aislamiento por defecto de PostgreSQL (READ COMMITTED): dos peticiones concurrentes podrían leer el mismo `order` y crear un empate. Como el único administrador es Jorge (concurrencia real ≈ nula) y un empate de `order` solo afecta a la presentación, la resolución adoptada es hacer el **orden determinista en la lectura**: todas las consultas de galería ordenan por `[{ order: "asc" }, { createdAt: "asc" }]` (`PhotoGallery.tsx`, `admin/galeria/page.tsx`). Así, aunque hubiera un empate, la galería siempre se muestra en un orden estable y predecible. / Wrapping `findFirst`+`create` in a transaction does **not** by itself guarantee atomicity under PostgreSQL's default READ COMMITTED isolation. Since Jorge is the only admin (real concurrency ≈ none) and an `order` tie only affects presentation, the resolution is **deterministic read ordering**: all gallery queries sort by `[{ order: "asc" }, { createdAt: "asc" }]`, so ties always render in a stable order.
 
 ---
 
@@ -104,8 +109,7 @@
 
 **Fix:** Implemented IP-based rate limiting using `x-forwarded-for`. An in-memory `Map<string, number>` tracks the last visit per IP. If the same IP requests within 60 seconds, the count is returned without incrementing. The map self-evicts when it exceeds 10,000 entries.
 
-> **Nota / Note:** Esto es suficiente para un blog personal. Si se necesitara algo más robusto (multi-instance en Vercel), se podría usar Vercel KV o similar.  
-> This is sufficient for a personal blog. For multi-instance Vercel deployments, Vercel KV or similar could be used.
+> **Actualización (post-revisión) / Post-review update:** Conviene ser preciso sobre el alcance de este límite. El **control principal** contra la inflación normal del contador es del lado del cliente: `VisitCounter` solo hace `POST` una vez por sesión (guarda en `sessionStorage`). El límite por IP en memoria es una **capa secundaria best-effort**: frena bucles de `curl` contra una misma instancia caliente, pero en serverless cada instancia tiene su propio `Map` y se reinicia en cold-start, por lo que **no es infalible**. Para un contador de vanidad esto es una decisión deliberada y suficiente (el peor caso es un número inflado, no un problema de seguridad). Si algún día se quisiera algo robusto y distribuido, la vía sería **Vercel KV / Upstash Redis**. Documentado también como comentario en el propio `route.ts`. / To be precise about scope: the **primary control** is client-side (`VisitCounter` POSTs once per session via `sessionStorage`). The in-memory per-IP limit is a **best-effort secondary layer** — it curbs `curl` loops against the same warm instance but is **not bulletproof** on serverless (per-instance `Map`, resets on cold-start). For a vanity counter this is a deliberate, sufficient choice (worst case is an inflated number, not a security issue). A robust distributed version would use **Vercel KV / Upstash Redis**. Also documented as a comment in `route.ts`.
 
 ---
 
@@ -133,12 +137,9 @@
 
 **Problem:** The unhashed token (`rawToken`) was included in the email link as a query parameter. If the link was intercepted (proxy, log, referer), anyone could use it to authenticate without knowing credentials.
 
-**Solución:** Se añade un parámetro `hash` con los primeros 12 caracteres del token hasheado (`hashedToken.slice(0, 12)`). En el servidor (page `magico`), se puede verificar que el hash del token proporcionado coincide antes de proceder con `signIn`.
+**Solución (revisada):** El intento inicial —añadir un parámetro `hash` con los primeros 12 caracteres del token hasheado— **se ha revertido**, porque no aportaba seguridad: la página `/login/magico` nunca lo leía (solo usa `token` y `email`), así que era puro adorno y, de paso, exponía 12 caracteres del hash en la URL. Además, el «problema» original está mal planteado: en un **magic link el token va en la URL por diseño** (es el mecanismo de autenticación, entregado al buzón del propio usuario). La seguridad real ya estaba y se mantiene: el token es de **un solo uso**, **caduca en 1 hora** y se guarda **hasheado (SHA-256)** en la BD; NextAuth lo verifica contra la BD al usarlo. Resolución: eliminar el parámetro `hash` inútil y dejar el enlace como `?token=…&email=…`, con un comentario que documenta las protecciones reales.
 
-**Fix:** Added a `hash` parameter with the first 12 characters of the hashed token (`hashedToken.slice(0, 12)`). The server (`magico` page) can verify the hash matches before proceeding with `signIn`.
-
-> **Pendiente / TODO:** La página `/login/magico` debería verificar este `hash` antes de aceptar el token. Actualmente solo lo recibe; la verificación real ya la hace NextAuth internamente contra la DB, pero añadir la comprobación del hash sería una capa extra de defensa. Se deja como mejora posterior.  
-> The `/login/magico` page should verify this `hash` before accepting the token. Currently it only receives it; NextAuth does the real verification against the DB internally, but adding the hash check would be an extra defense layer. Left as a future improvement.
+**Fix (revised):** The initial attempt — adding a `hash` param with the first 12 chars of the hashed token — was **reverted**, as it added no security: the `/login/magico` page never read it (it only uses `token` and `email`), so it was pure decoration and leaked 12 chars of the hash into the URL. Also, the original "problem" is misframed: in a **magic link the token is in the URL by design** (it's the auth mechanism, delivered to the user's own inbox). The real protections were already in place and remain: the token is **single-use**, **expires in 1 hour**, and is stored **hashed (SHA-256)**; NextAuth verifies it against the DB on use. Resolution: remove the useless `hash` param, leaving `?token=…&email=…`, with a comment documenting the real protections.
 
 ---
 
@@ -157,6 +158,8 @@
 ---
 
 ## MEDIAS / MEDIUM
+
+> **Numeración / Numbering:** hay 7 incidencias medias reales (M1, M2, M5–M9). Los IDs **M3 y M4 no existen** — el conteo original de «9 medias» era erróneo. Se mantiene el salto de numeración para no alterar los IDs ya referenciados por el commit. / There are 7 real medium issues (M1, M2, M5–M9). IDs **M3 and M4 do not exist** — the original "9 medium" count was wrong. The gap is kept to preserve the IDs already referenced by the commit.
 
 ### M1 — revalidatePath sin prefijo de locale / revalidatePath without locale prefix
 

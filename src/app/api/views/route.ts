@@ -5,6 +5,14 @@ import { headers } from "next/headers";
 export const dynamic = "force-dynamic";
 
 const KEY = "site";
+
+// Anti-abuso del contador (vanidad). Control PRINCIPAL: el cliente solo hace
+// POST una vez por sesión (guarda en sessionStorage, ver VisitCounter). Este
+// límite por IP en memoria es una capa secundaria "best-effort": frena bucles
+// de curl contra una misma instancia caliente, pero NO es infalible en
+// serverless (cada instancia tiene su propio Map y se reinicia en cold-start).
+// Para un contador de vanidad es suficiente; si algún día se necesitara algo
+// robusto y distribuido, la vía sería Vercel KV / Upstash Redis.
 const visits = new Map<string, number>();
 
 // Lectura del total de visitas.

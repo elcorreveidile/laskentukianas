@@ -54,8 +54,11 @@ export async function POST(req: Request) {
     await db.verificationToken.create({ data: { identifier: email, token: hashedToken, expires } });
 
     // 6) Envío del enlace.
+    // El token viaja en la URL por diseño (así funcionan los magic links): la
+    // seguridad viene de que es de un solo uso, caduca en 1 h y se guarda
+    // hasheado en la BD (arriba). NextAuth lo verifica contra la BD al usarlo.
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3010";
-    const magicUrl = `${appUrl}/login/magico?token=${rawToken}&email=${encodeURIComponent(email)}&hash=${encodeURIComponent(hashedToken.slice(0, 12))}`;
+    const magicUrl = `${appUrl}/login/magico?token=${rawToken}&email=${encodeURIComponent(email)}`;
     await sendMagicLinkEmail(email, user.name || name, magicUrl);
 
     return NextResponse.json({ ok: true });

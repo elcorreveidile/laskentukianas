@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 
 export async function PhotoGallery() {
   const images = await db.galleryImage
-    .findMany({ orderBy: { order: "asc" } })
+    .findMany({ orderBy: [{ order: "asc" }, { createdAt: "asc" }] })
     .catch(() => [] as { id: string; url: string; caption: string | null; link: string | null }[]);
 
   if (images.length === 0) return null;
