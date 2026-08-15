@@ -209,6 +209,19 @@ model Counter {
   updatedAt DateTime @updatedAt
 }
 
+// Galería de fotos gestionada desde el admin (independiente de las entradas).
+// Se muestra en las secciones públicas; Jorge añade/ordena/borra imágenes.
+model GalleryImage {
+  id        String   @id @default(cuid())
+  url       String
+  caption   String?
+  link      String?  // enlace opcional al pulsar (una entrada, Instagram…)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([order])
+}
+
 // ---------- Enums ----------
 
 enum Role {

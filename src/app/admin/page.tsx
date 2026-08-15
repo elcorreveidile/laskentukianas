@@ -42,21 +42,6 @@ export default async function AdminHome() {
           <p className="mt-1 text-sm text-tinta/60">contador propio del sitio</p>
         </div>
       </div>
-
-      <div className="mt-6 rounded-xl border border-black/10 bg-white p-6 shadow-card">
-        <p className="text-sm font-medium text-tinta">Analíticas detalladas</p>
-        <p className="mt-1 text-sm text-tinta/60">
-          Páginas más vistas, países, dispositivos y referentes están en Vercel Analytics.
-        </p>
-        <a
-          href="https://vercel.com/javiers-projects-cc8068ed/laskentukianas/analytics"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 inline-block font-medium text-kentuki-dark hover:underline"
-        >
-          Abrir Vercel Analytics ↗
-        </a>
-      </div>
       <Link
         href="/admin/articulos/nuevo"
         className="mt-6 inline-block rounded-lg bg-kentuki px-6 py-3 font-display uppercase tracking-wide text-white hover:bg-kentuki-dark"
