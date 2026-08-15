@@ -54,7 +54,8 @@ export async function submitComment(input: unknown): Promise<CommentResult> {
     },
   });
 
-  revalidatePath(`/${article.slug}`);
+  revalidatePath(`/es/${article.slug}`);
+  revalidatePath(`/en/${article.slug}`);
   revalidatePath("/admin/comentarios");
   return { ok: true, message: PENDING };
 }

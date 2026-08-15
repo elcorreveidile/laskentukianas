@@ -81,7 +81,10 @@ export default async function ArticlePage({
       video: ["src", "controls", "poster", "width", "height", "preload", "class"],
       audio: ["src", "controls", "preload"],
       source: ["src", "type", "srcset"],
-      "*": ["class", "id", "style"],
+      "*": ["class", "id"],
+      p: ["class", "id", "style"],
+      span: ["class", "id", "style"],
+      div: ["class", "id", "style"],
     },
     allowedIframeHostnames: [
       "www.youtube.com", "youtube.com", "youtube-nocookie.com",
@@ -172,6 +175,7 @@ export default async function ArticlePage({
           articleId={base.id}
           a={challenge.a}
           b={challenge.b}
+          op={challenge.op}
           token={challenge.token}
         />
       </section>

@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
     // 6) Envío del enlace.
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3010";
-    const magicUrl = `${appUrl}/login/magico?token=${rawToken}&email=${encodeURIComponent(email)}`;
+    const magicUrl = `${appUrl}/login/magico?token=${rawToken}&email=${encodeURIComponent(email)}&hash=${encodeURIComponent(hashedToken.slice(0, 12))}`;
     await sendMagicLinkEmail(email, user.name || name, magicUrl);
 
     return NextResponse.json({ ok: true });

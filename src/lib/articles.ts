@@ -67,8 +67,8 @@ export async function listArticleCards(
           coverImage: a.coverImage,
         };
       });
-    } catch {
-      // Tabla de traducciones ausente o error → fallback a español.
+    } catch (e) {
+      console.error("[listArticleCards] fallback:", e);
     }
   }
 
@@ -79,7 +79,8 @@ export async function listArticleCards(
       select: { slug: true, title: true, excerpt: true, coverImage: true },
     });
     return rows;
-  } catch {
+  } catch (e) {
+    console.error("[listArticleCards]", e);
     return [];
   }
 }
@@ -121,7 +122,8 @@ export async function resolveArticle(
           metaDescription: tr.metaDescription,
         };
       }
-    } catch {
+    } catch (e) {
+      console.error("[resolveArticle] translation lookup:", e);
       // tabla ausente → seguimos con el fallback por slug español
     }
   }
@@ -147,8 +149,8 @@ export async function resolveArticle(
             metaDescription: tr.metaDescription,
           };
         }
-      } catch {
-        // sin traducción disponible → español
+      } catch (e) {
+        console.error("[resolveArticle] en translation:", e);
       }
     }
   }
@@ -192,9 +194,9 @@ export async function localizedNeighbor(
         select: { slug: true, title: true },
       });
       if (tr) return { slug: tr.slug, title: tr.title };
-    } catch {
-      // sin traducción → español
-    }
+      } catch (e) {
+        console.error("[localizedNeighbor]", e);
+      }
   }
   return { slug: article.slug, title: article.title };
 }
@@ -220,8 +222,8 @@ export async function searchArticles(
         orderBy: { article: { order: "asc" } },
         select: { slug: true, title: true },
       });
-    } catch {
-      // tabla ausente → fallback a búsqueda española
+    } catch (e) {
+      console.error("[searchArticles] en fallback:", e);
     }
   }
 
@@ -237,7 +239,8 @@ export async function searchArticles(
       orderBy: { order: "asc" },
       select: { slug: true, title: true },
     });
-  } catch {
+  } catch (e) {
+    console.error("[searchArticles]", e);
     return [];
   }
 }

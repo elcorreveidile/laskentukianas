@@ -10,11 +10,13 @@ export function CommentForm({
   articleId,
   a,
   b,
+  op,
   token,
 }: {
   articleId: string;
   a: number;
   b: number;
+  op: string;
   token: string;
 }) {
   const t = useTranslations("comment");
@@ -67,7 +69,7 @@ export function CommentForm({
         </p>
       )}
 
-      <div aria-hidden className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
+      <div aria-hidden="true" tabIndex={-1} className="absolute left-0 top-0 h-px w-px overflow-hidden opacity-0">
         <label>
           <input
             tabIndex={-1}
@@ -98,7 +100,7 @@ export function CommentForm({
         />
         <div className="flex items-center gap-3">
           <label className="text-sm font-medium text-tinta">
-            {t("antiSpam", { a, b })}
+            {t("antiSpam", { a, b, op })}
           </label>
           <input
             className="w-20 rounded-lg border border-black/15 px-3 py-2 focus:ring-2 focus:ring-kentuki"
@@ -106,7 +108,7 @@ export function CommentForm({
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
             required
-            aria-label={t("antiSpam", { a, b })}
+            aria-label={t("antiSpam", { a, b, op })}
           />
         </div>
       </div>

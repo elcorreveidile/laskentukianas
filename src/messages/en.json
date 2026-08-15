@@ -120,7 +120,7 @@
     "description": "It will be published when Jorge reviews it.",
     "namePlaceholder": "Your name",
     "commentPlaceholder": "Your comment…",
-    "antiSpam": "Anti-spam: how much is {a} + {b}?",
+    "antiSpam": "Anti-spam: how much is {a} {op} {b}?",
     "submit": "Send comment",
     "submitting": "Sending…",
     "success": "Sent.",
@@ -147,7 +147,7 @@
     "magicForm": {
       "namePlaceholder": "Your name",
       "emailPlaceholder": "your@email.com",
-      "challenge": "How much is {a} + {b}?",
+      "challenge": "How much is {a} {op} {b}?",
       "sending": "Sending…",
       "submit": "Send me a login link",
       "sent": "Check your email 📬",

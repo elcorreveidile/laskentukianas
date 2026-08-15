@@ -20,7 +20,14 @@ async function brevo(path: string, init?: RequestInit): Promise<any> {
     cache: "no-store",
   });
   const text = await res.text();
-  const data = text ? JSON.parse(text) : {};
+  let data: any = {};
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(`Brevo respondió con JSON inválido (${res.status})`);
+    }
+  }
   if (!res.ok) {
     throw new Error(data?.message || `Brevo respondió ${res.status}`);
   }

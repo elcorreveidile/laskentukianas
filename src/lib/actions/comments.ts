@@ -20,7 +20,8 @@ export async function setCommentApproved(id: string, approved: boolean) {
     include: { article: { select: { slug: true } } },
   });
   revalidatePath("/admin/comentarios");
-  revalidatePath(`/${c.article.slug}`);
+  revalidatePath(`/es/${c.article.slug}`);
+  revalidatePath(`/en/${c.article.slug}`);
 }
 
 export async function deleteComment(id: string) {
@@ -30,5 +31,6 @@ export async function deleteComment(id: string) {
     include: { article: { select: { slug: true } } },
   });
   revalidatePath("/admin/comentarios");
-  revalidatePath(`/${c.article.slug}`);
+  revalidatePath(`/es/${c.article.slug}`);
+  revalidatePath(`/en/${c.article.slug}`);
 }

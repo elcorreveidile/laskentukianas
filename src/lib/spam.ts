@@ -2,7 +2,17 @@ import { createHmac } from "crypto";
 
 const secret = process.env.AUTH_SECRET || "dev-secret-kentukianas";
 
-/** Firma el resultado correcto para poder validarlo sin guardar estado. */
+type Op = { a: number; b: number; op: string; answer: number };
+
+function pickOp(): Op {
+  const ops: (() => Op)[] = [
+    () => { const a = 2 + Math.floor(Math.random() * 8); const b = 2 + Math.floor(Math.random() * 8); return { a, b, op: "+", answer: a + b }; },
+    () => { const a = 5 + Math.floor(Math.random() * 10); const b = 1 + Math.floor(Math.random() * a); return { a, b, op: "-", answer: a - b }; },
+    () => { const a = 2 + Math.floor(Math.random() * 6); const b = 2 + Math.floor(Math.random() * 6); return { a, b, op: "×", answer: a * b }; },
+  ];
+  return ops[Math.floor(Math.random() * ops.length)]();
+}
+
 export function sign(n: number): string {
   return createHmac("sha256", secret).update(String(n)).digest("hex");
 }
@@ -12,9 +22,7 @@ export function verifyChallenge(answer: number, token: string): boolean {
   return sign(answer) === token;
 }
 
-/** Genera una operación matemática sencilla (suma) y su token firmado. */
-export function makeChallenge(): { a: number; b: number; token: string } {
-  const a = 1 + Math.floor(Math.random() * 9);
-  const b = 1 + Math.floor(Math.random() * 9);
-  return { a, b, token: sign(a + b) };
+export function makeChallenge(): { a: number; b: number; op: string; token: string } {
+  const { a, b, op, answer } = pickOp();
+  return { a, b, op, token: sign(answer) };
 }

@@ -70,9 +70,10 @@ export async function saveArticle(input: ArticleInput) {
       ? existing?.publishedAt ?? new Date()
       : null;
 
+  const slug = data.slug || slugify(data.title);
   const base = {
     title: data.title,
-    slug: data.slug || slugify(data.title),
+    slug,
     excerpt: data.excerpt || null,
     content: data.content,
     coverImage: data.coverImage || null,
@@ -85,10 +86,20 @@ export async function saveArticle(input: ArticleInput) {
 
   let article;
   if (existing) {
+    if (slug !== existing.slug) {
+      const collision = await db.article.findFirst({ where: { slug, NOT: { id: existing.id } } });
+      if (collision) {
+        throw new Error(`Ya existe un artículo con el slug «${slug}». Elige otro título o slug.`);
+      }
+    }
     article = await db.article.update({ where: { id: existing.id }, data: base });
     // resincronizar etiquetas
     await db.tagsOnArticles.deleteMany({ where: { articleId: existing.id } });
   } else {
+    const collision = await db.article.findFirst({ where: { slug } });
+    if (collision) {
+      throw new Error(`Ya existe un artículo con el slug «${slug}». Elige otro título o slug.`);
+    }
     article = await db.article.create({
       data: { ...base, authorId: session.user!.id },
     });

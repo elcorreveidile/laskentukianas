@@ -57,7 +57,7 @@ export default function QuizReto() {
   function elegir(optIdx: number) {
     if (elegida !== null) return;
     setElegida(optIdx);
-    if (optIdx === correcta) setAciertos((n) => n + 1);
+    if (actual.orden[optIdx] === correcta) setAciertos((n) => n + 1);
   }
 
   function siguiente() {
@@ -117,9 +117,9 @@ export default function QuizReto() {
       <h2 className="font-display text-2xl leading-tight text-tinta sm:text-3xl">{actual.p.q}</h2>
 
       <div className="mt-6 grid gap-3">
-        {actual.orden.map((optIdx) => {
-          const esCorrecta = optIdx === correcta;
-          const esElegida = optIdx === elegida;
+        {actual.orden.map((origIdx) => {
+          const esCorrecta = origIdx === correcta;
+          const esElegida = origIdx === elegida;
           let cls = "border-black/10 bg-white hover:border-kentuki hover:bg-kentuki/5";
           if (elegida !== null) {
             if (esCorrecta) cls = "border-emerald-500 bg-emerald-50 text-emerald-900";
@@ -128,12 +128,12 @@ export default function QuizReto() {
           }
           return (
             <button
-              key={optIdx}
-              onClick={() => elegir(optIdx)}
+              key={origIdx}
+              onClick={() => elegir(origIdx)}
               disabled={elegida !== null}
               className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 text-left font-body transition ${cls}`}
             >
-              <span className="font-semibold">{actual.p.options[optIdx]}</span>
+              <span className="font-semibold">{actual.p.options[origIdx]}</span>
               {elegida !== null && esCorrecta && <span className="ml-auto">✓</span>}
               {elegida !== null && esElegida && !esCorrecta && <span className="ml-auto">✗</span>}
             </button>

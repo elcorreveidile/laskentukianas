@@ -19,10 +19,10 @@ const SERIE: Record<string, string> = {
 
 export default async function AdminArticulos() {
   const articles = await db.article.findMany({
+    where: { NOT: { status: "ARCHIVED" } },
     orderBy: [{ series: "asc" }, { order: "asc" }],
     select: { id: true, title: true, series: true, status: true, order: true },
   });
-
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">

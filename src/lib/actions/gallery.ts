@@ -26,9 +26,11 @@ export async function addGalleryImage(formData: FormData) {
   const link = String(formData.get("link") || "").trim() || null;
   if (!url) return;
 
-  const last = await db.galleryImage.findFirst({ orderBy: { order: "desc" } });
-  await db.galleryImage.create({
-    data: { url, caption, link, order: (last?.order ?? 0) + 1 },
+  await db.$transaction(async (tx) => {
+    const last = await tx.galleryImage.findFirst({ orderBy: { order: "desc" } });
+    await tx.galleryImage.create({
+      data: { url, caption, link, order: (last?.order ?? 0) + 1 },
+    });
   });
   revalidateGallery();
 }
@@ -42,17 +44,18 @@ export async function deleteGalleryImage(id: string) {
 // Intercambia el orden con la imagen vecina (arriba/abajo).
 export async function moveGalleryImage(id: string, direction: "up" | "down") {
   await requireEditor();
-  const all = await db.galleryImage.findMany({ orderBy: { order: "asc" } });
-  const i = all.findIndex((g) => g.id === id);
-  if (i === -1) return;
-  const j = direction === "up" ? i - 1 : i + 1;
-  if (j < 0 || j >= all.length) return;
+  const item = await db.galleryImage.findUnique({ where: { id } });
+  if (!item) return;
 
-  const a = all[i];
-  const b = all[j];
+  const neighbor = await db.galleryImage.findFirst({
+    where: { order: direction === "up" ? { lt: item.order } : { gt: item.order } },
+    orderBy: { order: direction === "up" ? "desc" : "asc" },
+  });
+  if (!neighbor) return;
+
   await db.$transaction([
-    db.galleryImage.update({ where: { id: a.id }, data: { order: b.order } }),
-    db.galleryImage.update({ where: { id: b.id }, data: { order: a.order } }),
+    db.galleryImage.update({ where: { id: item.id }, data: { order: neighbor.order } }),
+    db.galleryImage.update({ where: { id: neighbor.id }, data: { order: item.order } }),
   ]);
   revalidateGallery();
 }

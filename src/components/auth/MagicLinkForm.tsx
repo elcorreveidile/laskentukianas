@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 type Status = "idle" | "sending" | "sent" | "error";
-type Challenge = { a: number; b: number; token: string };
+type Challenge = { a: number; b: number; op: string; token: string };
 
 export function MagicLinkForm() {
   const t = useTranslations("login.magicForm");
@@ -92,7 +92,7 @@ export function MagicLinkForm() {
       />
       <div className="flex items-center gap-2">
         <label className="text-sm text-tinta/70">
-          {t("challenge", { a: challenge?.a ?? "…", b: challenge?.b ?? "…" })}
+          {t("challenge", { a: challenge?.a ?? "…", b: challenge?.b ?? "…", op: challenge?.op ?? "+" })}
         </label>
         <input
           type="number"

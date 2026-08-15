@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLocale } from "next-intl";
 import "leaflet/dist/leaflet.css";
 
 type Enlace = { slug: string; text: string };
@@ -60,6 +61,7 @@ const STOPS: Stop[] = [
 
 export default function MapaViaje() {
   const ref = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
 
   useEffect(() => {
     let map: import("leaflet").Map | undefined;
@@ -92,7 +94,7 @@ export default function MapaViaje() {
         const enlaces = s.links
           .map(
             (l) =>
-              `<a href="/${l.slug}" style="color:#1f6f96;font-weight:600;">${l.text} →</a>`
+              `<a href="/${locale}/${l.slug}" style="color:#1f6f96;font-weight:600;">${l.text} →</a>`
           )
           .join("<br/>");
         L.marker(s.coords, { icon })

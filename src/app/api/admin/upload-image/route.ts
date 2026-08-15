@@ -51,7 +51,7 @@ export async function POST(req: Request) {
   }
 
   const safeName =
-    file.name.replace(/[^a-zA-Z0-9._-]/g, "-").slice(-80) || "imagen";
+    file.name.replace(/[^a-zA-Z0-9._-]/g, "-").replace(/\.+$/g, ".").slice(-80) || "imagen";
 
   try {
     const blob = await put(`articulos/subidas/${safeName}`, file, {

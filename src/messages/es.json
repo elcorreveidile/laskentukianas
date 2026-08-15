@@ -120,7 +120,7 @@
     "description": "Se publicará cuando Jorge lo revise.",
     "namePlaceholder": "Tu nombre",
     "commentPlaceholder": "Tu comentario…",
-    "antiSpam": "Anti-spam: ¿cuánto es {a} + {b}?",
+    "antiSpam": "Anti-spam: ¿cuánto es {a} {op} {b}?",
     "submit": "Enviar comentario",
     "submitting": "Enviando…",
     "success": "Enviado.",
@@ -147,7 +147,7 @@
     "magicForm": {
       "namePlaceholder": "Tu nombre",
       "emailPlaceholder": "tu@email.com",
-      "challenge": "¿Cuánto es {a} + {b}?",
+      "challenge": "¿Cuánto es {a} {op} {b}?",
       "sending": "Enviando…",
       "submit": "Enviarme un enlace de acceso",
       "sent": "Revisa tu correo 📬",

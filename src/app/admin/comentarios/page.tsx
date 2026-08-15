@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export default async function AdminComentarios() {
   const comments = await db.comment.findMany({
     orderBy: [{ approved: "asc" }, { createdAt: "desc" }],
-    take: 300,
+    take: 50,
     include: { article: { select: { title: true, slug: true } } },
   });
   const pendientes = comments.filter((c) => !c.approved).length;
@@ -17,7 +17,7 @@ export default async function AdminComentarios() {
       <div className="mb-6">
         <h1 className="font-display text-3xl uppercase text-tinta">Comentarios</h1>
         <p className="text-sm text-tinta/60">
-          {pendientes} por moderar · {comments.length} en total (últimos 300)
+          {pendientes} por moderar · {comments.length} en total (últimos 50)
         </p>
       </div>
 
