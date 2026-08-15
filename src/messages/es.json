@@ -5,6 +5,7 @@
     "title": "Crónicas Kentukianas",
     "description": "De Menorca a Kentucky: las crónicas de Jorge, un profe de español lanzado a la aventura (y a la batería).",
     "footer": "De Menorca a Kentucky.",
+    "visits": "{count, number} visitas",
     "credit": "Desarrollo"
   },
   "nav": {

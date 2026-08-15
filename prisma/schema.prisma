@@ -201,6 +201,14 @@ model Comment {
   @@index([articleId])
 }
 
+// Contador simple de visitas (agregado, sin datos personales).
+// key: "site" para el total del sitio; puede ampliarse a "post:<slug>".
+model Counter {
+  key       String   @id
+  count     Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
 // ---------- Enums ----------
 
 enum Role {

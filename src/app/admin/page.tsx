@@ -4,12 +4,15 @@ import { db } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export default async function AdminHome() {
-  const [articulos, publicados, comentarios, pendientes] = await Promise.all([
+  const [articulos, publicados, comentarios, pendientes, visitas] = await Promise.all([
     db.article.count(),
     db.article.count({ where: { status: "PUBLISHED" } }),
     db.comment.count(),
     db.comment.count({ where: { approved: false } }),
+    db.counter.findUnique({ where: { key: "site" } }).catch(() => null),
   ]);
+
+  const totalVisitas = visitas?.count ?? 0;
 
   const cards = [
     { label: "Artículos", value: articulos, sub: `${publicados} publicados`, href: "/admin/articulos" },
@@ -19,7 +22,7 @@ export default async function AdminHome() {
   return (
     <div>
       <h1 className="mb-6 font-display text-3xl uppercase text-tinta">Panel</h1>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((c) => (
           <Link
             key={c.label}
@@ -31,6 +34,28 @@ export default async function AdminHome() {
             <p className="mt-1 text-sm text-tinta/60">{c.sub}</p>
           </Link>
         ))}
+        <div className="rounded-xl border border-black/10 bg-white p-6 shadow-card">
+          <p className="text-sm text-tinta/60">Visitas</p>
+          <p className="mt-1 text-3xl font-bold text-kentuki-dark">
+            {totalVisitas.toLocaleString("es-ES")}
+          </p>
+          <p className="mt-1 text-sm text-tinta/60">contador propio del sitio</p>
+        </div>
+      </div>
+
+      <div className="mt-6 rounded-xl border border-black/10 bg-white p-6 shadow-card">
+        <p className="text-sm font-medium text-tinta">Analíticas detalladas</p>
+        <p className="mt-1 text-sm text-tinta/60">
+          Páginas más vistas, países, dispositivos y referentes están en Vercel Analytics.
+        </p>
+        <a
+          href="https://vercel.com/javiers-projects-cc8068ed/laskentukianas/analytics"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-block font-medium text-kentuki-dark hover:underline"
+        >
+          Abrir Vercel Analytics ↗
+        </a>
       </div>
       <Link
         href="/admin/articulos/nuevo"

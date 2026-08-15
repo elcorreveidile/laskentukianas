@@ -5,6 +5,7 @@
     "title": "Crónicas Kentukianas",
     "description": "From Menorca to Kentucky: the chronicles of Jorge, a Spanish teacher who threw himself into the adventure (and the drums).",
     "footer": "From Menorca to Kentucky.",
+    "visits": "{count, number} views",
     "credit": "Development"
   },
   "nav": {

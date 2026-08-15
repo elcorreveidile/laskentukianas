@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Instagram } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Por2DurosCredit } from "@/components/Por2DurosCredit";
+import { VisitCounter } from "@/components/VisitCounter";
 
 export function Footer({ loggedIn = false }: { loggedIn?: boolean }) {
   const t = useTranslations("site");
@@ -35,6 +36,7 @@ export function Footer({ loggedIn = false }: { loggedIn?: boolean }) {
         <p className="mt-4 text-xs text-tinta/60">
           <Por2DurosCredit />
         </p>
+        <VisitCounter />
         <p className="text-xs text-tinta/40">
           © {new Date().getFullYear()} {t("name")}
         </p>
