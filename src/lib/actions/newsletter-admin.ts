@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { importContacts, sendCampaign } from "@/lib/brevo";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 
 async function requireEditor() {
   const session = await auth();
@@ -50,7 +50,7 @@ const sendSchema = z.object({
 });
 
 function buildEmailHtml(intro: string): string {
-  const clean = DOMPurify.sanitize(intro, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+  const clean = sanitizeHtml(intro, { allowedTags: [], allowedAttributes: {} });
   const parrafos = clean
     .split(/\n{2,}/)
     .map((p) => `<p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#2b2b2b;">${p.replace(/\n/g, "<br/>")}</p>`)

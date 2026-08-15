@@ -57,7 +57,7 @@ export default function QuizReto() {
   function elegir(optIdx: number) {
     if (elegida !== null) return;
     setElegida(optIdx);
-    if (actual.orden[optIdx] === correcta) setAciertos((n) => n + 1);
+    if (optIdx === correcta) setAciertos((n) => n + 1);
   }
 
   function siguiente() {
