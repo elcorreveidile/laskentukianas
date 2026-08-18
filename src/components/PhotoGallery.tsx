@@ -2,12 +2,79 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 
+type GalleryImg = { id: string; url: string; caption: string | null; link: string | null };
+
+/**
+ * Extrae el slug candidato de un enlace interno del blog:
+ * «/mi-entrada» → «mi-entrada», «/es/mi-entrada» → «mi-entrada».
+ * Devuelve null para enlaces externos.
+ */
+function internalArticleSlug(link: string): string | null {
+  if (!link.startsWith("/")) return null;
+  const path = link.split(/[?#]/)[0].replace(/\/+$/, "");
+  const parts = path.split("/").filter(Boolean);
+  if (parts.length === 0) return null;
+  if (parts[0] === "es" || parts[0] === "en") {
+    return parts.length >= 2 ? parts[parts.length - 1] : null;
+  }
+  return parts[parts.length - 1];
+}
+
+/**
+ * De entre los slugs dados, devuelve los que corresponden a un artículo que ya
+ * no está publicado (archivado o borrador). Los slugs que no son artículos
+ * (páginas estáticas como «/mapa») no se incluyen, así no se ocultan por error.
+ */
+async function unpublishedArticleSlugs(slugs: string[]): Promise<Set<string>> {
+  const unique = Array.from(new Set(slugs));
+  const unpublished = new Set<string>();
+  if (unique.length === 0) return unpublished;
+
+  try {
+    const arts = await db.article.findMany({
+      where: { slug: { in: unique } },
+      select: { slug: true, status: true },
+    });
+    for (const a of arts) if (a.status !== "PUBLISHED") unpublished.add(a.slug);
+  } catch (e) {
+    console.error("[PhotoGallery] article status lookup:", e);
+  }
+
+  try {
+    const trans = await db.articleTranslation.findMany({
+      where: { slug: { in: unique } },
+      select: { slug: true, article: { select: { status: true } } },
+    });
+    for (const tr of trans) if (tr.article.status !== "PUBLISHED") unpublished.add(tr.slug);
+  } catch (e) {
+    console.error("[PhotoGallery] translation status lookup:", e);
+  }
+
+  return unpublished;
+}
+
 export async function PhotoGallery() {
   const images = await db.galleryImage
     .findMany({ orderBy: [{ order: "asc" }, { createdAt: "asc" }] })
-    .catch(() => [] as { id: string; url: string; caption: string | null; link: string | null }[]);
+    .catch(() => [] as GalleryImg[]);
 
   if (images.length === 0) return null;
+
+  // Oculta fotos cuyo enlace apunta a un artículo ya no publicado (archivado):
+  // así la portada de un artículo archivado deja de aparecer y no queda un
+  // enlace roto que lleve a un 404.
+  const linkedSlugs = images
+    .map((img) => (img.link ? internalArticleSlug(img.link) : null))
+    .filter((s): s is string => Boolean(s));
+  const unpublished = await unpublishedArticleSlugs(linkedSlugs);
+
+  const visible = images.filter((img) => {
+    if (!img.link) return true;
+    const slug = internalArticleSlug(img.link);
+    return !(slug && unpublished.has(slug));
+  });
+
+  if (visible.length === 0) return null;
 
   const t = await getTranslations("gallery");
 
@@ -15,7 +82,7 @@ export async function PhotoGallery() {
     <section className="mt-16 border-t border-black/10 pt-10">
       <h2 className="mb-8 text-center font-display text-2xl uppercase text-tinta">{t("heading")}</h2>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:gap-3">
-        {images.map((img) => {
+        {visible.map((img) => {
           const image = (
             // eslint-disable-next-line @next/next/no-img-element
             <img

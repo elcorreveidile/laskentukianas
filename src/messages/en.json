@@ -51,6 +51,11 @@
   "gallery": {
     "heading": "Gallery"
   },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or is no longer available.",
+    "home": "Back to home"
+  },
   "menorquianas": {
     "title": "Menorquianas",
     "description": "From Kentucky to Menorca: the teacher's new chapter.",

@@ -127,6 +127,9 @@ export async function deleteArticle(id: string) {
     data: { status: "ARCHIVED" },
   });
   revalidatePath("/");
+  revalidatePath("/cronicas");
+  revalidatePath("/kentukiana");
+  revalidatePath("/menorquianas");
   revalidatePath("/admin/articulos");
   revalidatePath(`/${a.slug}`);
 }

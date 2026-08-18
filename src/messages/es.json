@@ -51,6 +51,11 @@
   "gallery": {
     "heading": "Galería"
   },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o ya no está disponible.",
+    "home": "Volver al inicio"
+  },
   "menorquianas": {
     "title": "Menorquianas",
     "description": "De Kentucky a Menorca: la nueva etapa del profe.",
