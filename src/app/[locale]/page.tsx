@@ -24,9 +24,9 @@ export default async function Home() {
           <div>
             <p className="font-hand text-2xl text-kentuki-dark">{tSite("tagline")}</p>
             <h1 className="mt-1 font-display text-4xl uppercase leading-none text-tinta md:text-6xl">
-              {tSite("title").split(" ").slice(0, -1).join(" ")}
+              Crónicas
               <br />
-              Kentukianas
+              de ida y vuelta
             </h1>
             <p className="mt-5 max-w-md font-serif text-lg text-tinta/80">
               {t("hero")}
